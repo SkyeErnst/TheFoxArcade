@@ -19,7 +19,7 @@ public class Ball : MonoBehaviour {
         rB2D = GetComponent<Rigidbody2D>();
     }
 
-    void OnCollisionEnter2D(Collider2D otherObject)
+    void OnCollisionEnter2D(Collision2D otherObject)
     {
         if(paddleName == otherObject.gameObject.tag)
         {
@@ -32,5 +32,6 @@ public class Ball : MonoBehaviour {
     private float CalcPosDiff(Vector2 firstPos, Vector2 secondPos)
     {
         //Clamp return value to max width of paddle and return the difference of the two vecters.
+        throw new System.NotImplementedException();
     }
 }
