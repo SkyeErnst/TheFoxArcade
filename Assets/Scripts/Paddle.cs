@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class Control : MonoBehaviour {
+public class Paddle : MonoBehaviour {
 
     #region Public Fields
     /// <summary>
