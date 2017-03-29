@@ -9,7 +9,16 @@ public class Ball : MonoBehaviour {
 
     #region Private Fields
     private readonly string paddleName = "Paddle";
-    private Paddle padd;
+    
+    /// <summary>
+    /// The maximum velocity that the ball is allowed to travel
+    /// </summary>
+    private readonly float maxVelocity = 30.0f;
+
+    /// <summary>
+    /// The minimum velocity that the ball is allowed to travel
+    /// </summary>
+    private readonly float minVelocity = 5.0f;
     private Vector2 paddlePos;
     private Rigidbody2D rB2D;
     #endregion
@@ -21,17 +30,32 @@ public class Ball : MonoBehaviour {
 
     void OnCollisionEnter2D(Collision2D otherObject)
     {
-        Debug.Log("OncollisionEnter2D");
         if(paddleName == otherObject.gameObject.tag)
         {
-            Debug.Log("Enter IF");
-            padd = otherObject.collider.gameObject.GetComponent<Paddle>();
             paddlePos = otherObject.gameObject.transform.position;
             ContactPoint2D contact = otherObject.contacts[0];
             rB2D.AddForce(CalcPosDiff(contact.point, paddlePos));
         }
     }
 
+    void FixedUpadte()
+    {
+        Debug.Log("FixedUpdate");
+
+        UpdateVelocity();
+    }
+
+    private void UpdateVelocity()
+    {
+
+    }
+
+    /// <summary>
+    /// Calculates the difference between impactPoint and centerPoint while locking the y value when returned
+    /// </summary>
+    /// <param name="impactPoint"></param>
+    /// <param name="centerPoint"></param>
+    /// <returns></returns>
     private Vector2 CalcPosDiff(Vector2 impactPoint, Vector2 centerPoint)
     {
         //Clamp return value to max width of paddle and return the difference of the two vecters.
@@ -39,7 +63,6 @@ public class Ball : MonoBehaviour {
         totalDist.x *= 100;
         Debug.Log("Dist between ball impact (" + impactPoint + ") and paddlePos (" + centerPoint);
         totalDist.y = 0.0f;
-        //totalDist.x = Mathf.Clamp(totalDist.x, 0.0f, 0.5f);
 
         return totalDist;
     }
