@@ -56,18 +56,19 @@ public class Ball : MonoBehaviour {
             paddlePos = otherObject.gameObject.transform.position;
             ContactPoint2D contact = otherObject.contacts[0];
             rB2D.AddForce(CalcPosDiff(contact.point, paddlePos));
-            UpdateVelocity();
         }
     }
 
     void OnCollisionExit2D(Collision2D otherObject)
     {
-        rB2D.AddForce(rB2D.velocity * velocityBounceMultiplier);
+        if (paddleName == otherObject.collider.gameObject.tag && maxVelocity > (rB2D.velocity *velocityBounceMultiplier).sqrMagnitude)
+        {
+            rB2D.AddForce(rB2D.velocity * velocityBounceMultiplier);
+        }
     }
 
     void FixedUpdate()
     {
-
         Debug.Log("Velocity: " + rB2D.velocity);
 
         UpdateVelocity();
@@ -88,13 +89,13 @@ public class Ball : MonoBehaviour {
             else
             {
                 Debug.Log("Decreasing Speed");
-                rB2D.AddForce(-rB2D.velocity * maxVelocity, ForceMode2D.Force);
+                rB2D.AddForce(-rB2D.velocity * maxVelocity);
             }
         }
         if(rB2D.velocity.sqrMagnitude < minVelocity)
         {
             Debug.Log("Increasing Speed");
-            rB2D.AddForce(rB2D.velocity * minVelocity, ForceMode2D.Force);
+            rB2D.AddForce(rB2D.velocity * minVelocity);
         }
     }
 
