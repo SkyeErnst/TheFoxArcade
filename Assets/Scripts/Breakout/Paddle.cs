@@ -18,7 +18,7 @@ public class Paddle : MonoBehaviour {
     /// <summary>
     /// How much to multiply movement by to slow down movement
     /// </summary>
-    private readonly float movementDampening = .25f;
+    private readonly float movementDampening = .15f;
 
     /// <summary>
     /// The minimum buffer distance allowed between the padel and 
