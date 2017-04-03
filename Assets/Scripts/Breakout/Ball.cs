@@ -23,7 +23,7 @@ public class Ball : MonoBehaviour {
     /// <summary>
     /// How much velocity to add to the rigidbody after a bounce
     /// </summary>
-    private readonly float velocityBounceMultiplier = 10.0f;
+    private readonly float velocityBounceMultiplier = 8.0f;
 
     /// <summary>
     /// How much to multiply the x value of the 

@@ -2,18 +2,18 @@
 
 public class Block : MonoBehaviour
 {
-    void Start()
+    #region Private Fields
+    private static ScoreKeeping scoreKeep;
+    #endregion
+
+    void Awake()
     {
-
-    }
-
-    void Update()
-    {
-
+        scoreKeep = GameObject.Find("Keepers").GetComponent<ScoreKeeping>();
     }
 
     void OnCollisionEnter2D(Collision2D otherObject)
     {
+        scoreKeep.Score++;
         Destroy(gameObject);
     }
 }
