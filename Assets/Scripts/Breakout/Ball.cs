@@ -70,45 +70,12 @@ public class Ball : MonoBehaviour {
         //&& maxVelocity > (rB2D.velocity * velocityBounceMultiplier).sqrMagnitude
         if (paddleName == otherObject.collider.gameObject.tag )
         {
-            Debug.LogWarning("Passed if");
             rB2D.AddForce(rB2D.velocity * velocityBounceMultiplier);
         }
     }
 
     void FixedUpdate()
     {
-        if (rB2D.velocity.sqrMagnitude > maxVelocity)
-        {
-            float absSquarMagVelocity = Mathf.Abs(rB2D.velocity.sqrMagnitude);
-
-            if (absSquarMagVelocity > (maxVelocity + maxVelocityOffset))
-            {
-                Debug.Log("Velocity: " + rB2D.velocity);
-                Debug.LogWarning("TOO DAMN FAST");
-                //rB2D.velocity = Vector2.ClampMagnitude(rB2D.velocity, maxVelocity);
-
-                rB2D.velocity *= .99f;
-
-
-                //Vector2 clampedVeloc = Vector2.ClampMagnitude(rB2D.velocity, maxVelocity);
-                //rB2D.velocity = Vector2.zero;
-
-                //rB2D.velocity = clampedVeloc;
-                
-            }
-            else
-            {
-            Debug.Log("Velocity: " + rB2D.velocity);
-            Debug.Log("Decreasing Speed");
-            rB2D.AddForce(-rB2D.velocity * minVelocity);
-            }
-        }
-        //if (rB2D.velocity.sqrMagnitude < minVelocity)
-        //{
-        //    Debug.Log("Velocity: " + rB2D.velocity);
-        //    Debug.Log("Increasing Speed");
-        //    rB2D.AddForce(rB2D.velocity * minVelocity * 50);
-        //}
 
         UpdateVelocity();
     }
@@ -118,24 +85,19 @@ public class Ball : MonoBehaviour {
     /// </summary>
     private void UpdateVelocity()
     {
-        //if (rB2D.velocity.sqrMagnitude > maxVelocity)
-        //{
-        //    if (rB2D.velocity.sqrMagnitude > maxVelocity + 40.0f)
-        //    {
-        //        Debug.Log("TOO DAMN FAST");
-        //        rB2D.velocity = Vector2.ClampMagnitude(rB2D.velocity, maxVelocity);
-        //    }
-        //    else
-        //    {
-        //        Debug.Log("Decreasing Speed");
-        //        rB2D.AddForce(-rB2D.velocity * maxVelocity);
-        //    }
-        //}
-        //if (rB2D.velocity.sqrMagnitude < minVelocity)
-        //{
-        //    Debug.Log("Increasing Speed");
-        //    rB2D.AddForce(rB2D.velocity * minVelocity * 100);
-        //}
+        if (rB2D.velocity.sqrMagnitude > maxVelocity)
+        {
+            float absSquarMagVelocity = Mathf.Abs(rB2D.velocity.sqrMagnitude);
+
+            if (absSquarMagVelocity > (maxVelocity + maxVelocityOffset))
+            {
+                rB2D.velocity *= .99f;
+            }
+            else
+            {
+                rB2D.AddForce(-rB2D.velocity * minVelocity);
+            }
+        }
     }
 
     /// <summary>
