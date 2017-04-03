@@ -31,6 +31,20 @@ public class Paddle : MonoBehaviour {
     /// The right most part of the paddel model
     /// </summary>
     public GameObject RightBuffer;
+
+    /// <summary>
+    /// The rightmost position marker, used to test against
+    /// the position of the paddle
+    /// for mouse movement.
+    /// </summary>
+    public GameObject LeftMarker;
+
+    /// <summary>
+    /// The rightmost position marker, used to test against
+    /// the position of the paddle
+    /// for mouse movement.
+    /// </summary>
+    public GameObject RightMarker;
     #endregion
 
     #region Private Fields
@@ -75,7 +89,6 @@ public class Paddle : MonoBehaviour {
             if (Input.GetKey(KeyCode.A)) //As long as there is no object in the way, move left
             {
                 direction = Vector2.left;
-                Debug.DrawRay(LeftBuffer.transform.position, Vector2.left, Color.red, 1.25f);
                 if (false == Physics2D.Raycast(LeftBuffer.transform.position, direction, distanceBuffer))
                 {
                     transform.Translate(Vector2.left * movementDampening);
@@ -84,7 +97,6 @@ public class Paddle : MonoBehaviour {
             if (Input.GetKey(KeyCode.D)) //As long as there is no object in the way, move right
             {
                 direction = Vector2.right;
-                Debug.DrawRay(RightBuffer.transform.position, Vector2.right, Color.red, 1.25f);
                 if (false == Physics2D.Raycast(RightBuffer.transform.position, Vector2.right, distanceBuffer))
                 {
                     transform.Translate(Vector2.right * movementDampening);
@@ -97,10 +109,15 @@ public class Paddle : MonoBehaviour {
         #region Mouse Move
         if(e_ControlMethod.Mouse == currentControlMethod)
         {
-            Vector2 mouseDelta;
-            mouseDelta.x = Input.GetAxis("Mouse X") * movementDampening;
-            mouseDelta.y = 0.0f;
-            transform.Translate(mouseDelta);
+            Vector2 leftDir;
+            leftDir = Vector2.zero;
+            if(false == Physics2D.Raycast(LeftBuffer.transform.position, leftDir, distanceBuffer))
+            {
+                Vector2 mouseDelta;
+                mouseDelta.x = Input.GetAxis("Mouse X") * movementDampening;
+                mouseDelta.y = 0.0f;
+                transform.Translate(mouseDelta);
+            }
         }
         #endregion
 
