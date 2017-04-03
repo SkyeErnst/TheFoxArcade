@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 
-public class Paddle : MonoBehaviour {
+public class Paddle : MonoBehaviour
+{
 
     #region Enums
     public enum e_ControlMethod
@@ -33,7 +34,7 @@ public class Paddle : MonoBehaviour {
     public GameObject RightBuffer;
 
     /// <summary>
-    /// The rightmost position marker, used to test against
+    /// The leftmost position marker, used to test against
     /// the position of the paddle
     /// for mouse movement.
     /// </summary>
@@ -66,22 +67,22 @@ public class Paddle : MonoBehaviour {
 
     private e_ControlMethod currentControlMethod;
     #endregion
-	
+
     void Awake()
     {
         SetControlMethod(e_ControlMethod.Mouse);
     }
 
-	void Update ()
+    void Update()
     {
         Move();
-	}
+    }
 
     private void Move()
     {
 
         #region Keyboard Move
-        if(e_ControlMethod.Keyboard == currentControlMethod)
+        if (e_ControlMethod.Keyboard == currentControlMethod)
         {
             Vector2 direction;
             direction = Vector2.zero;
@@ -107,21 +108,28 @@ public class Paddle : MonoBehaviour {
         #endregion
 
         #region Mouse Move
-        if(e_ControlMethod.Mouse == currentControlMethod)
-        {
-            Vector2 leftDir;
-            leftDir = Vector2.zero;
-            if(false == Physics2D.Raycast(LeftBuffer.transform.position, leftDir, distanceBuffer))
+        if (e_ControlMethod.Mouse == currentControlMethod)
+        { 
+            if (Mathf.Abs(gameObject.transform.position.x) > Mathf.Abs(LeftMarker.transform.position.x))
+            {
+                gameObject.transform.position = LeftMarker.transform.position;
+            }
+            else if (Mathf.Abs(gameObject.transform.position.x) > Mathf.Abs(RightMarker.transform.position.x))
+            {
+                gameObject.transform.position = LeftMarker.transform.position;
+            }
+            else
             {
                 Vector2 mouseDelta;
                 mouseDelta.x = Input.GetAxis("Mouse X") * movementDampening;
                 mouseDelta.y = 0.0f;
                 transform.Translate(mouseDelta);
             }
+   
         }
-        #endregion
-
     }
+    #endregion
+
 
     public void SetControlMethod(e_ControlMethod cntrlMethod)
     {
