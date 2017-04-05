@@ -110,21 +110,21 @@ public class Paddle : MonoBehaviour
         #region Mouse Move
         if (e_ControlMethod.Mouse == currentControlMethod)
         { 
-            if (Mathf.Abs(gameObject.transform.position.x) > Mathf.Abs(LeftMarker.transform.position.x))
-            {
-                gameObject.transform.position = LeftMarker.transform.position;
-            }
-            else if (Mathf.Abs(gameObject.transform.position.x) > Mathf.Abs(RightMarker.transform.position.x))
-            {
-                gameObject.transform.position = LeftMarker.transform.position;
-            }
-            else
-            {
+            //if (Mathf.Abs(gameObject.transform.position.x) > Mathf.Abs(LeftMarker.transform.position.x))
+            //{
+            //    gameObject.transform.position = LeftMarker.transform.position;
+            //}
+            //else if (Mathf.Abs(gameObject.transform.position.x) > Mathf.Abs(RightMarker.transform.position.x))
+            //{
+            //    gameObject.transform.position = LeftMarker.transform.position;
+            //}
+            //else
+            //{
                 Vector2 mouseDelta;
                 mouseDelta.x = Input.GetAxis("Mouse X") * movementDampening;
                 mouseDelta.y = 0.0f;
                 transform.Translate(mouseDelta);
-            }
+            //}
    
         }
     }
