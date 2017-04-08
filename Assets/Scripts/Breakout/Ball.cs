@@ -9,6 +9,8 @@ public class Ball : MonoBehaviour {
 
     #region Private Fields
     private readonly string paddleName = "Paddle";
+
+    private readonly string wallName = "Wall";
     
     /// <summary>
     /// The maximum velocity that the ball is allowed to travel
@@ -48,11 +50,18 @@ public class Ball : MonoBehaviour {
     /// this class is attached to
     /// </summary>
     private Rigidbody2D rB2D;
+
+    /// <summary>
+    /// Reference to Particle Manager object
+    /// </summary>
+    private ParticleManager partMan; 
+
     #endregion
 
-    void Start()
+    void Awake()
     {
         rB2D = GetComponent<Rigidbody2D>();
+        partMan = GameObject.Find("_Keepers").GetComponent<ParticleManager>();
     }
 
     void OnCollisionEnter2D(Collision2D otherObject)
@@ -62,6 +71,11 @@ public class Ball : MonoBehaviour {
             paddlePos = otherObject.gameObject.transform.position;
             ContactPoint2D contact = otherObject.contacts[0];
             rB2D.AddForce(CalcPosDiff(contact.point, paddlePos));
+        }
+        if(wallName == otherObject.gameObject.tag)
+        {
+            Debug.Log("Memes");
+            partMan.SpawnSystem(otherObject.contacts[0].otherCollider.gameObject.transform.position, Vector3.left, ParticleManager.ParticleType.WallHit);
         }
     }
 
@@ -76,7 +90,6 @@ public class Ball : MonoBehaviour {
 
     void FixedUpdate()
     {
-
         UpdateVelocity();
     }
 
