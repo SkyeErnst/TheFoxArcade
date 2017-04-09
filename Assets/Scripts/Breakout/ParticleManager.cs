@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class ParticleManager : MonoBehaviour
 {
@@ -18,6 +19,12 @@ public class ParticleManager : MonoBehaviour
         PaddleHit,
         WallHit,
         BallLost
+    }
+
+    private enum ScreenSide
+    {
+        Left = 0,
+        Right
     }
 
     // To rotate the wall particle system correctly, try finding if the left or right wall is hit,
@@ -40,17 +47,60 @@ public class ParticleManager : MonoBehaviour
                 newGO = Instantiate(BlockBreakParticlePrefab, spawnPoint, Quaternion.identity);
                 newRot = Quaternion.LookRotation(normal);
                 newGO.transform.rotation = newRot;
+                newGO.GetComponent<TimedDestroy>().DestroyAfterTime(5.0f);
                 break;
             case ParticleType.BallLost:
                 break;
             case ParticleType.PaddleHit:
+                newGO = Instantiate(PaddleHitParticlePrefab, spawnPoint, Quaternion.identity);
+                newRot = Quaternion.LookRotation(normal);
+                newGO.transform.rotation = newRot;
+                newGO.GetComponent<TimedDestroy>().DestroyAfterTime(5.0f);
                 break;
             case ParticleType.WallHit:
                 newGO = Instantiate(WallHitParticlePrefab, spawnPoint, Quaternion.identity);
-                newRot = Quaternion.LookRotation(normal);
+                if(ScreenSide.Left ==(FindLeftOrRight(spawnPoint)))
+                {
+                    newRot = Quaternion.Euler(0, 0, 270);
+                }
+                else
+                {
+                    newRot = Quaternion.Euler(0, 0, 90);
+                }
                 newGO.transform.rotation = newRot;
+                newGO.GetComponent<TimedDestroy>().DestroyAfterTime(5.0f);
                 break;
+        }
+    }
 
+    private ScreenSide FindLeftOrRight(GameObject obj)
+    {
+        if(obj.transform.position.x > 0.0f)
+        {
+            return ScreenSide.Right;
+        }
+        if (obj.transform.position.x < 0.0f)
+        {
+            return ScreenSide.Left;
+        }
+        else
+        {
+            throw new Exception("Contact is neither left or right of center. wat?");
+        }
+    }
+    private ScreenSide FindLeftOrRight(Vector3 obj)
+    {
+        if (obj.x > 0.0f)
+        {
+            return ScreenSide.Right;
+        }
+        if (obj.x < 0.0f)
+        {
+            return ScreenSide.Left;
+        }
+        else
+        {
+            throw new Exception("Contact is neither left or right of center. wat?");
         }
     }
 }

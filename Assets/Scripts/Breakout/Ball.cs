@@ -70,18 +70,17 @@ public class Ball : MonoBehaviour {
         {
             paddlePos = otherObject.gameObject.transform.position;
             ContactPoint2D contact = otherObject.contacts[0];
+            partMan.SpawnSystem(otherObject.contacts[0].otherCollider.gameObject.transform.position, Vector3.up, ParticleManager.ParticleType.PaddleHit);
             rB2D.AddForce(CalcPosDiff(contact.point, paddlePos));
         }
         if(wallName == otherObject.gameObject.tag)
         {
-            Debug.Log("Memes");
             partMan.SpawnSystem(otherObject.contacts[0].otherCollider.gameObject.transform.position, Vector3.left, ParticleManager.ParticleType.WallHit);
         }
     }
 
     void OnCollisionExit2D(Collision2D otherObject)
     {
-        //&& maxVelocity > (rB2D.velocity * velocityBounceMultiplier).sqrMagnitude
         if (paddleName == otherObject.collider.gameObject.tag )
         {
             rB2D.AddForce(rB2D.velocity * velocityBounceMultiplier);
