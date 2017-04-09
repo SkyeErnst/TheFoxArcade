@@ -20,6 +20,16 @@ public class ParticleManager : MonoBehaviour
         BallLost
     }
 
+    // To rotate the wall particle system correctly, try finding if the left or right wall is hit,
+    // and then rotate 90 degrees in the needed direction
+
+    /// <summary>
+    /// Instantiates a new empty GameObject at spawnPoint that contains the given particle system type
+    /// Rotation of the new object is handeled internally.
+    /// </summary>
+    /// <param name="spawnPoint"></param>
+    /// <param name="normal"></param>
+    /// <param name="particleType"></param>
     public void SpawnSystem(Vector3 spawnPoint, Vector3 normal, ParticleType particleType)
     {
         GameObject newGO;
