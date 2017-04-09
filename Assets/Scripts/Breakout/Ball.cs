@@ -70,12 +70,12 @@ public class Ball : MonoBehaviour {
         {
             paddlePos = otherObject.gameObject.transform.position;
             ContactPoint2D contact = otherObject.contacts[0];
-            partMan.SpawnSystem(otherObject.contacts[0].otherCollider.gameObject.transform.position, Vector3.up, ParticleManager.ParticleType.PaddleHit);
+            partMan.SpawnSystem(otherObject.contacts[0].point, Vector3.up, ParticleManager.ParticleType.PaddleHit);
             rB2D.AddForce(CalcPosDiff(contact.point, paddlePos));
         }
         if(wallName == otherObject.gameObject.tag)
         {
-            partMan.SpawnSystem(otherObject.contacts[0].otherCollider.gameObject.transform.position, Vector3.left, ParticleManager.ParticleType.WallHit);
+            partMan.SpawnSystem(otherObject.contacts[0].point, Vector3.left, ParticleManager.ParticleType.WallHit);
         }
     }
 
