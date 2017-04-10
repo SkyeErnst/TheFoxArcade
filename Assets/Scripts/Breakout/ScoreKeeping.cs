@@ -13,6 +13,7 @@ public class ScoreKeeping : MonoBehaviour
         set
         {
             score++;
+            timeSinceLastScore = 0.0f;
             scoreText.text = score.ToString();
         }
     }
@@ -24,5 +25,11 @@ public class ScoreKeeping : MonoBehaviour
 
     #region Private Fields
     private  uint score;
+    private float timeSinceLastScore;
     #endregion
+
+    public void Update()
+    {
+        timeSinceLastScore += Time.deltaTime;
+    }
 }
