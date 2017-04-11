@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class Block : MonoBehaviour
+public class Block : BlockManager
 {
     #region Private Fields
     private static ScoreKeeping scoreKeep;
