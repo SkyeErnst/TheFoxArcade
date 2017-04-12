@@ -13,8 +13,17 @@ public class BlockManager : MonoBehaviour
         TriplePoints = 4,
         Indestructable = 5,
     }
+    public enum PowerUps
+    {
+        
+    }
 
     #endregion
+
+    #region Protected fields
+    protected Dictionary<int, Color> colorDict;
+    #endregion
+
 
     #region Private Fields
     /// <summary>
@@ -44,18 +53,41 @@ public class BlockManager : MonoBehaviour
     {
         sysRand = new System.Random();
         blockList = new List<Block>();
+        colorDict = new Dictionary<int, Color>();
         blockArray = new Block[51];
         goArray = new GameObject[51];
+
+        colorDict.Add(0, Color.white);
+        colorDict.Add(1, Color.red);
+        colorDict.Add(2, Color.green);
+        colorDict.Add(3, Color.blue);
+        colorDict.Add(4, Color.black);
+
         goArray = GameObject.FindGameObjectsWithTag(blockTag);
 
 
         for (int i = 0; i < goArray.Length; i++)
         {
-            Debug.Log("Iteration: " + i);
             blockArray[i] = goArray[i].gameObject.GetComponent<Block>();
-            
+            int rand = BiasedRandomNumber(0, 4);
+            Color newColor;
+            if(true == colorDict.TryGetValue(rand, out newColor))
+            {
+                blockArray[i].ChangeBlockCollor(newColor);
+            }
         }
         blockList.AddRange(blockArray);
+
+        //for (int i = 0; i < goArray.Length; i++)
+        //{
+        //    blockArray[i].ChangeBlockCollor(Color.black);
+        //}
+
+        for (int i = 0; i < 10000; i++)
+        {
+            Debug.Log("Value: " + BiasedRandomNumber(0, 4));
+        }
+
     }
 
     /// <summary>
@@ -66,6 +98,16 @@ public class BlockManager : MonoBehaviour
     /// <returns></returns>
     private int BiasedRandomNumber(int min, int max)
     {
-        throw new System.NotImplementedException();
+
+        int biasedRan = sysRand.Next(min, max) - sysRand.Next(min, max);
+        if(min > biasedRan)
+        {
+            biasedRan = min;
+        }
+        else if (biasedRan > max)
+        {
+            biasedRan = max;
+        }
+        return biasedRan;
     }
 }
