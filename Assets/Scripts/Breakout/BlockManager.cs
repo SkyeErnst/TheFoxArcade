@@ -5,7 +5,7 @@ using UnityEngine;
 public class BlockManager : MonoBehaviour
 {
     #region Enums
-    protected enum BlockTypes
+    public enum BlockTypes
     {
         Normal = 0,
         TakesTwoHits = 1,
@@ -65,15 +65,18 @@ public class BlockManager : MonoBehaviour
 
         goArray = GameObject.FindGameObjectsWithTag(blockTag);
 
-
+        //Loop over 
         for (int i = 0; i < goArray.Length; i++)
         {
             blockArray[i] = goArray[i].gameObject.GetComponent<Block>();
+
             int rand = BiasedRandomNumber(0, 5);
+            Debug.Log(rand);
             Color newColor;
             if(true == colorDict.TryGetValue(rand, out newColor))
             {
                 blockArray[i].ChangeBlockCollor(newColor);
+                blockArray[i].CurrentBlockType = (BlockTypes)rand;
             }
         }
         blockList.AddRange(blockArray);

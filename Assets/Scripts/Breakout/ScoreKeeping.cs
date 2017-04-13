@@ -12,12 +12,25 @@ public class ScoreKeeping : MonoBehaviour
         }
         set
         {
-            scorePerHit *= (uint)scoreMultiplier;
+            scorePerHit *= (uint)scoreMultiplier + BlockScoreAddition;
             score += scorePerHit; 
             scoreMultiplier += 1.5f;
+
             scoreText.text = score.ToString();
 
             scorePerHit = scorePerHitDefaultValue;
+        }
+    }
+
+    public uint BlockScoreAddition
+    {
+        get
+        {
+            return blockScoreAddition;
+        }
+        set
+        {
+            blockScoreAddition = value;
         }
     }
     #endregion
@@ -36,6 +49,10 @@ public class ScoreKeeping : MonoBehaviour
     /// Used to prevent directly multiplying the score by the multiplier
     /// </summary>
     private uint scorePerHit = 1;
+    /// <summary>
+    /// proxy variable for get of property of same name
+    /// </summary>
+    private uint blockScoreAddition = 0;
     /// <summary>
     /// The default value for scorePerHit
     /// </summary>
