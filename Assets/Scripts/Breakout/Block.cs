@@ -46,7 +46,7 @@ public class Block : BlockManager
 
     void OnCollisionEnter2D(Collision2D otherObject)
     {
-        switch(currType)
+        switch(CurrentBlockType)
         {
             case BlockTypes.Normal:
                 health -= 2;
@@ -55,6 +55,7 @@ public class Block : BlockManager
             case BlockTypes.TakesTwoHits:
                 health -= 1;
                 scoreKeep.BlockScoreAddition = 1;
+                ChangeBlockCollor(Color.yellow);
                 break;
             case BlockTypes.DoublePoints:
                 health -= 2;
@@ -72,11 +73,9 @@ public class Block : BlockManager
         {
             Debug.Log(CurrentBlockType);
             Destroy(gameObject);
+            scoreKeep.UpdateScore();
+            partMan.SpawnSystem(gameObject.transform.position, Vector3.up, ParticleManager.ParticleType.BlockBreak);
         }
-
-        scoreKeep.Score++;
-        partMan.SpawnSystem(gameObject.transform.position, Vector3.up, ParticleManager.ParticleType.BlockBreak);
-        Destroy(gameObject);
     }
 
     public void ChangeBlockCollor(Color color)

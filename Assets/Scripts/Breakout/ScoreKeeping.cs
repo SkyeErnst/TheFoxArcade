@@ -10,16 +10,6 @@ public class ScoreKeeping : MonoBehaviour
         {
             return score;
         }
-        set
-        {
-            scorePerHit *= (uint)scoreMultiplier + BlockScoreAddition;
-            score += scorePerHit; 
-            scoreMultiplier += 1.5f;
-
-            scoreText.text = score.ToString();
-
-            scorePerHit = scorePerHitDefaultValue;
-        }
     }
 
     public uint BlockScoreAddition
@@ -86,5 +76,17 @@ public class ScoreKeeping : MonoBehaviour
             scoreMultiplier = minScoreMultiplier;
         }
         multiplierText.text = scoreMultiplier.ToString(precision);
+    }
+
+    public void UpdateScore()
+    {
+        scorePerHit *= (uint)scoreMultiplier + BlockScoreAddition;
+        score += scorePerHit;
+        scoreMultiplier += 1.5f;
+
+        scoreText.text = score.ToString();
+
+        scorePerHit = scorePerHitDefaultValue;
+        
     }
 }
