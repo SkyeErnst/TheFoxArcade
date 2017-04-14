@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class MenuSystem : MonoBehaviour
 {
@@ -29,7 +30,10 @@ public class MenuSystem : MonoBehaviour
     #endregion 
 
     #region Private Fields
-
+    /// <summary>
+    /// Text to display when the player clears the level
+    /// </summary>
+    private readonly string winText = "Cleared! \n Nice job!";
     #endregion
 
 

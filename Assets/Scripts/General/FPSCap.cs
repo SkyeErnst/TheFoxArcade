@@ -1,9 +1,10 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 /// <summary>
 /// Class for the perpose of keeping the framerate of the application in check
 /// </summary>
-public class FPSCap :  ScriptableObject {
+public class FPSCap :  MonoBehaviour {
 
     #region enums
     public enum TargetFramerates
@@ -13,7 +14,8 @@ public class FPSCap :  ScriptableObject {
         Standard = 60,
         Target = 120,
         Fast = 144,
-        Sanic = 240
+        Sanic = 240,
+        Uncapped = int.MaxValue
     }
     #endregion
 
@@ -21,7 +23,7 @@ public class FPSCap :  ScriptableObject {
     public int TargetFrameRate { get; set; }
     #endregion 
 
-    public void OnEnable()
+    public void Awake()
     {
         Debug.LogWarning("We are here");
         TargetFrameRate = (int)TargetFramerates.Fast;
