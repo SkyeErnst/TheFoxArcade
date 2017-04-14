@@ -25,7 +25,6 @@ public class FPSCap :  MonoBehaviour {
 
     public void Awake()
     {
-        Debug.LogWarning("We are here");
         TargetFrameRate = (int)TargetFramerates.Fast;
 
         Application.targetFrameRate = TargetFrameRate;
