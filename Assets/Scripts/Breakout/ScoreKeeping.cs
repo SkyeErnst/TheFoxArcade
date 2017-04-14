@@ -67,6 +67,7 @@ public class ScoreKeeping : MonoBehaviour
 
     public void Update()
     {
+        
         if(scoreMultiplier > minScoreMultiplier)
         {
             scoreMultiplier -= Time.deltaTime * 1.5f;
