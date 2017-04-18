@@ -2,8 +2,14 @@
 
 public class CursorManager : MonoBehaviour
 {
-    public void Awake()
+
+    private void Awake()
     {
-        Cursor.lockState = CursorLockMode.Locked;
+        ChangeCursorState(CursorLockMode.Locked);
+    }
+
+    public static void ChangeCursorState(CursorLockMode lockMode)
+    {
+        Cursor.lockState = lockMode;
     }
 }

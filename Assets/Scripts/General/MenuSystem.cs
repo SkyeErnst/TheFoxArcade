@@ -16,16 +16,35 @@ public class MenuSystem : MonoBehaviour
     /// <summary>
     /// The pause state of specificly Breakout game
     /// </summary>
-    public enum BreakoutPause
+    public enum ActiveGamePause
     {
         Paused = 0,
         Unpaused = 1
     }
     public enum Canvases
     {
+        /// <summary>
+        /// The main canvas for the breakout game.
+        /// Contains information such as score and score multiplier
+        /// </summary>
         BreakoutGame = 0,
-        BreakoutLose = 1,
+        /// <summary>
+        /// This canvas displays the win/loss text and offers to let the
+        /// player try again or exit the cabinet
+        /// </summary>
+        BreakoutWinLose = 1,
+        /// <summary>
+        /// The menu that comes up when the player his the esc key
+        /// </summary>
         EscMenu = 2
+    }
+    public enum ActiveGame
+    {
+        /// <summary>
+        /// Active when there is no arcade game being played
+        /// </summary>
+        NoGame = 0,
+        Breakout = 1
     }
     #endregion
 
@@ -38,13 +57,13 @@ public class MenuSystem : MonoBehaviour
 
     #region Public Fields
     /// <summary>
-    /// List of all canvases
+    /// The text object to display the win/loss result to
     /// </summary>
-    public List<Canvas> CanvasList;
-
     public Text BreakoutResultDisplayText;
-
-    public Dictionary<Canvases, string> CanvasDict;
+    /// <summary>
+    /// Stores all the availible canvases in a way that is searchable
+    /// </summary>
+    public Dictionary<Canvases, Canvas> CanvasDict;
     #endregion
 
     #region Private Fields
@@ -69,13 +88,65 @@ public class MenuSystem : MonoBehaviour
     private void Awake()
     {
         GameObject[] goArray = GameObject.FindGameObjectsWithTag(CANVAS_TAG);
-        CanvasList = new List<Canvas>();
-        CanvasDict = new Dictionary<Canvases, string>();
+        CanvasDict = new Dictionary<Canvases, Canvas>();
 
         foreach (GameObject canvasGO in goArray)
         {
-            CanvasList.Add(canvasGO.GetComponent<Canvas>());
+            Canvases typeToAdd = canvasGO.GetComponent<CanvasAttachment>().CanvasType;
+            Canvas canvasToAdd = canvasGO.GetComponent<Canvas>();
+
+            CanvasDict.Add(typeToAdd, canvasToAdd);
+            
         }
         
+    }
+    /// <summary>
+    /// Makes the passed in canvas active and sets all others to inactive
+    /// </summary>
+    /// <param name="canvas"></param>
+    public void MakeActiveCanvas(Canvas canvas)
+    {
+        throw new System.NotImplementedException();
+    }
+    /// <summary>
+    /// Makes the passed in canvases active and setts all others to inactive
+    /// </summary>
+    /// <param name="canvas"></param>
+    public void MakeActiveCanvas(Canvas[] canvas)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    /// <summary>
+    /// Call to display win or loss text
+    /// </summary>
+    /// <param name="activeGame">The arcade game currently being played</param>
+    /// <param name="winLose">Weather the game was won or lost. True = won, false = lost</param>
+    public void OnWinLose(ActiveGame activeGame, bool winLose)
+    {
+        if(true == winLose)
+        {
+
+        }
+        else if (false == winLose)
+        {
+
+        }
+        else
+        {
+            throw new System.Exception("Game was neither won or lost. This should be impossible to reach");
+        }
+    }
+
+    /// <summary>
+    /// Unity method
+    /// </summary>
+    private void Update()
+    {
+        if(true == Input.GetKeyDown(KeyCode.Escape))
+        {
+            //MakeActiveCanvas()
+            throw new System.NotImplementedException();
+        }
     }
 }
