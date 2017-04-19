@@ -48,6 +48,9 @@ public class CanvasAttachment : MonoBehaviour
             case BREAKOUT_CANVAS_WINLOSE:
                 canvasType = MenuSystem.Canvases.BreakoutWinLose;
                 break;
+            case GENERAL_CANVAS_ESCMENU:
+                canvasType = MenuSystem.Canvases.EscMenu;
+                break;
         }
     }
 }

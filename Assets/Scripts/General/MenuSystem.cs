@@ -8,15 +8,7 @@ public class MenuSystem : MonoBehaviour
     /// <summary>
     /// The pause state of the whole application
     /// </summary>
-    public enum GlobalPauseState
-    {
-        Paused = 0,
-        Unpaused = 1
-    }
-    /// <summary>
-    /// The pause state of specificly Breakout game
-    /// </summary>
-    public enum ActiveGamePause
+    public enum PauseState
     {
         Paused = 0,
         Unpaused = 1
@@ -52,7 +44,7 @@ public class MenuSystem : MonoBehaviour
     /// <summary>
     /// Current state of being -Globaly- paused or unpaused
     /// </summary>
-    public GlobalPauseState PauseState { get; set; }
+    public PauseState GlobalPauseState { get; set; }
     #endregion
 
     #region Public Fields
@@ -96,23 +88,48 @@ public class MenuSystem : MonoBehaviour
             Canvas canvasToAdd = canvasGO.GetComponent<Canvas>();
 
             CanvasDict.Add(typeToAdd, canvasToAdd);
-            
         }
+
+        MakeActiveCanvas(Canvases.BreakoutGame);
         
     }
     /// <summary>
     /// Makes the passed in canvas active and sets all others to inactive
     /// </summary>
-    /// <param name="canvas"></param>
-    public void MakeActiveCanvas(Canvas canvas)
+    /// <param name="canvasToDisplay"></param>
+    //public void MakeActiveCanvas(Canvases canvasToDisplay)
+    //{
+    //    foreach (Canvases canvases in CanvasDict.Keys)
+    //    {
+    //        if(canvasToDisplay == canvases)
+    //        {
+    //            Canvas attempt;
+    //            CanvasDict.TryGetValue(canvasToDisplay, out attempt);
+                
+    //            attempt.enabled = true;
+    //        }
+    //        //Else disable canvas
+    //    }
+    //}
+    public void MakeActiveCanvas(Canvases canvasToDisplay)
     {
-        throw new System.NotImplementedException();
+        foreach (Canvas canvas in CanvasDict.Values)
+        {
+            if(canvasToDisplay == canvas.gameObject.GetComponent<CanvasAttachment>().CanvasType)
+            {
+                canvas.enabled = true;
+            }
+            else
+            {
+                canvas.enabled = false;
+            }
+        }
     }
     /// <summary>
     /// Makes the passed in canvases active and setts all others to inactive
     /// </summary>
     /// <param name="canvas"></param>
-    public void MakeActiveCanvas(Canvas[] canvas)
+    public void MakeActiveCanvas(Canvases[] canvasType)
     {
         throw new System.NotImplementedException();
     }
@@ -145,8 +162,9 @@ public class MenuSystem : MonoBehaviour
     {
         if(true == Input.GetKeyDown(KeyCode.Escape))
         {
-            //MakeActiveCanvas()
-            throw new System.NotImplementedException();
+            
+            Time.timeScale = 0.0f;
+            GlobalPauseState = PauseState.Paused;
         }
     }
 }
