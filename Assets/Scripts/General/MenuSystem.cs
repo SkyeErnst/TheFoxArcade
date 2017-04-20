@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class MenuSystem : MonoBehaviour
 {
@@ -44,7 +45,7 @@ public class MenuSystem : MonoBehaviour
     /// <summary>
     /// Current state of being -Globaly- paused or unpaused
     /// </summary>
-    public PauseState GlobalPauseState { get; set; }
+    public static PauseState GlobalPauseState { get; set; }
     #endregion
 
     #region Public Fields
@@ -75,9 +76,16 @@ public class MenuSystem : MonoBehaviour
     private const string BREKOUT_LOSE_TEXT = "Nice try...";
     #endregion
 
-    //try again / cleared text goes here
-
-    private void Awake()
+    private void Start()
+    {
+        GlobalPauseState = PauseState.Unpaused;
+        Init();
+    }
+    /// <summary>
+    /// Used to move activation of menu to after initialized of menu components and types
+    /// is complete
+    /// </summary>
+    private void Init()
     {
         GameObject[] goArray = GameObject.FindGameObjectsWithTag(CANVAS_TAG);
         CanvasDict = new Dictionary<Canvases, Canvas>();
@@ -89,28 +97,12 @@ public class MenuSystem : MonoBehaviour
 
             CanvasDict.Add(typeToAdd, canvasToAdd);
         }
-
         MakeActiveCanvas(Canvases.BreakoutGame);
-        
     }
     /// <summary>
-    /// Makes the passed in canvas active and sets all others to inactive
+    /// Makes the passed in canvas active and setts all others to inactive
     /// </summary>
     /// <param name="canvasToDisplay"></param>
-    //public void MakeActiveCanvas(Canvases canvasToDisplay)
-    //{
-    //    foreach (Canvases canvases in CanvasDict.Keys)
-    //    {
-    //        if(canvasToDisplay == canvases)
-    //        {
-    //            Canvas attempt;
-    //            CanvasDict.TryGetValue(canvasToDisplay, out attempt);
-                
-    //            attempt.enabled = true;
-    //        }
-    //        //Else disable canvas
-    //    }
-    //}
     public void MakeActiveCanvas(Canvases canvasToDisplay)
     {
         foreach (Canvas canvas in CanvasDict.Values)
@@ -156,15 +148,37 @@ public class MenuSystem : MonoBehaviour
     }
 
     /// <summary>
+    /// Unpauses the game
+    /// </summary>
+    public void UnPause()
+    {
+        Time.timeScale = 1.0f;
+        GlobalPauseState = PauseState.Unpaused;
+        MakeActiveCanvas(Canvases.BreakoutGame);
+        CursorManager.ChangeCursorState(CursorLockMode.Locked);
+    }
+    /// <summary>
+    /// Pauses the game
+    /// </summary>
+    public void Pause()
+    {
+        Time.timeScale = 0.0f;
+        GlobalPauseState = PauseState.Paused;
+        MakeActiveCanvas(Canvases.EscMenu);
+        CursorManager.ChangeCursorState(CursorLockMode.Confined);
+    }
+
+    /// <summary>
     /// Unity method
     /// </summary>
     private void Update()
     {
-        if(true == Input.GetKeyDown(KeyCode.Escape))
+        if(true == Input.GetKeyDown(KeyCode.Escape) && GlobalPauseState == PauseState.Unpaused)
         {
-            
-            Time.timeScale = 0.0f;
-            GlobalPauseState = PauseState.Paused;
+            Pause();        }
+        else if(true == Input.GetKeyDown(KeyCode.Escape) && GlobalPauseState == PauseState.Paused)
+        {
+            UnPause();
         }
     }
 }

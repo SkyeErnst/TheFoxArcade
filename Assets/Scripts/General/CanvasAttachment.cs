@@ -40,7 +40,7 @@ public class CanvasAttachment : MonoBehaviour
     private void Awake()
     {
         string goName = gameObject.name;
-        switch(name)
+        switch (name)
         {
             case BREAKOUT_CANVAS_MAIN:
                 canvasType = MenuSystem.Canvases.BreakoutGame;
@@ -51,6 +51,10 @@ public class CanvasAttachment : MonoBehaviour
             case GENERAL_CANVAS_ESCMENU:
                 canvasType = MenuSystem.Canvases.EscMenu;
                 break;
+            default:
+                Debug.LogError("Something has gone wrong here");
+                break;
         }
+        Debug.Log("Type: " + CanvasType);
     }
 }

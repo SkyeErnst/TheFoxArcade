@@ -75,7 +75,10 @@ public class Paddle : MonoBehaviour
 
     void Update()
     {
-        Move();
+        if(MenuSystem.PauseState.Unpaused == MenuSystem.GlobalPauseState)
+        {
+            Move();
+        }
     }
 
     private void Move()
