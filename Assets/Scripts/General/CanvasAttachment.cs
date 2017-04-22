@@ -55,6 +55,5 @@ public class CanvasAttachment : MonoBehaviour
                 Debug.LogError("Something has gone wrong here");
                 break;
         }
-        Debug.Log("Type: " + CanvasType);
     }
 }

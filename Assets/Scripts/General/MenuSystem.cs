@@ -52,7 +52,7 @@ public class MenuSystem : MonoBehaviour
     /// <summary>
     /// The text object to display the win/loss result to
     /// </summary>
-    public Text BreakoutResultDisplayText;
+    public Text WinLoseResultDisplayText;
     /// <summary>
     /// Stores all the availible canvases in a way that is searchable
     /// </summary>
@@ -74,10 +74,13 @@ public class MenuSystem : MonoBehaviour
     /// The text to be displayed when a breakout level is LOST
     /// </summary>
     private const string BREKOUT_LOSE_TEXT = "Nice try...";
+
+    private ActiveGame activeGame;
     #endregion
 
     private void Start()
     {
+        activeGame = ActiveGame.Breakout;
         GlobalPauseState = PauseState.Unpaused;
         Init();
     }
@@ -135,11 +138,17 @@ public class MenuSystem : MonoBehaviour
     {
         if(true == winLose)
         {
-
+            WinLoseResultDisplayText.text = BREKOUT_WIN_TEXT;
+            Pause();
+            MakeActiveCanvas(Canvases.BreakoutWinLose);
+            CursorManager.ChangeCursorState(CursorLockMode.None);
         }
         else if (false == winLose)
         {
-
+            WinLoseResultDisplayText.text = BREKOUT_LOSE_TEXT;
+            Pause();
+            MakeActiveCanvas(Canvases.BreakoutWinLose);
+            CursorManager.ChangeCursorState(CursorLockMode.None);
         }
         else
         {
@@ -152,9 +161,13 @@ public class MenuSystem : MonoBehaviour
     /// </summary>
     public void UnPause()
     {
+        if(ActiveGame.Breakout == activeGame)
+        {
+            MakeActiveCanvas(Canvases.BreakoutGame);
+        }
         Time.timeScale = 1.0f;
         GlobalPauseState = PauseState.Unpaused;
-        MakeActiveCanvas(Canvases.BreakoutGame);
+        //MakeActiveCanvas(Canvases.BreakoutGame);
         CursorManager.ChangeCursorState(CursorLockMode.Locked);
     }
     /// <summary>
@@ -164,8 +177,18 @@ public class MenuSystem : MonoBehaviour
     {
         Time.timeScale = 0.0f;
         GlobalPauseState = PauseState.Paused;
-        MakeActiveCanvas(Canvases.EscMenu);
-        CursorManager.ChangeCursorState(CursorLockMode.Confined);
+        //CursorManager.ChangeCursorState(CursorLockMode.Confined);
+    }
+    /// <summary>
+    /// Pauses the game, while switiching the displayed canvas
+    /// </summary>
+    /// <param name="canvasToShow"></param>
+    public void Pause(Canvases canvasToShow)
+    {
+        Time.timeScale = 0.0f;
+        GlobalPauseState = PauseState.Paused;
+        //CursorManager.ChangeCursorState(CursorLockMode.Confined);
+        MakeActiveCanvas(canvasToShow);
     }
 
     /// <summary>
@@ -175,7 +198,8 @@ public class MenuSystem : MonoBehaviour
     {
         if(true == Input.GetKeyDown(KeyCode.Escape) && GlobalPauseState == PauseState.Unpaused)
         {
-            Pause();        }
+            Pause(Canvases.EscMenu);
+        }
         else if(true == Input.GetKeyDown(KeyCode.Escape) && GlobalPauseState == PauseState.Paused)
         {
             UnPause();
