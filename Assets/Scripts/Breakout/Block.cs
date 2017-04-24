@@ -71,7 +71,7 @@ public class Block : BlockManager
 
         if(0 >= health)
         {
-            Destroy(gameObject);
+            gameObject.SetActive(false);
             scoreKeep.UpdateScore();
             partMan.SpawnSystem(gameObject.transform.position, Vector3.up, ParticleManager.ParticleType.BlockBreak);
         }
