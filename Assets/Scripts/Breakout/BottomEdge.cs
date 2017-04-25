@@ -4,15 +4,25 @@ using UnityEngine.SceneManagement;
 public class BottomEdge : MonoBehaviour
 {
     #region private fields
+    /// <summary>
+    /// Reference to the menu system object
+    /// </summary>
+    MenuSystem menSys;
 
+    /// <summary>
+    /// Name of the object that stores general objects like the menu system
+    /// </summary>
+    private const string KEEPER_NAME = "_Keepers";
 
+    #endregion
 
-#   endregion
-
-    void OnCollisionEnter2D()
+    private void Awake()
     {
-        Scene currentScene = SceneManager.GetActiveScene();
+        menSys = GameObject.Find(KEEPER_NAME).GetComponent<MenuSystem>();
+    }
 
-        SceneManager.LoadScene(currentScene.buildIndex);
+    private void OnCollisionEnter2D()
+    {
+        menSys.OnWinLose(MenuSystem.ActiveGame.Breakout, false);
     }
 }

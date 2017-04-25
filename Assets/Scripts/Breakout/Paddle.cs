@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 
-public class Paddle : MonoBehaviour {
+public class Paddle : MonoBehaviour
+{
 
     #region Enums
     public enum e_ControlMethod
@@ -31,6 +32,20 @@ public class Paddle : MonoBehaviour {
     /// The right most part of the paddel model
     /// </summary>
     public GameObject RightBuffer;
+
+    /// <summary>
+    /// The leftmost position marker, used to test against
+    /// the position of the paddle
+    /// for mouse movement.
+    /// </summary>
+    public GameObject LeftMarker;
+
+    /// <summary>
+    /// The rightmost position marker, used to test against
+    /// the position of the paddle
+    /// for mouse movement.
+    /// </summary>
+    public GameObject RightMarker;
     #endregion
 
     #region Private Fields
@@ -52,22 +67,25 @@ public class Paddle : MonoBehaviour {
 
     private e_ControlMethod currentControlMethod;
     #endregion
-	
+
     void Awake()
     {
         SetControlMethod(e_ControlMethod.Mouse);
     }
 
-	void Update ()
+    void Update()
     {
-        Move();
-	}
+        if(MenuSystem.PauseState.Unpaused == MenuSystem.GlobalPauseState)
+        {
+            Move();
+        }
+    }
 
     private void Move()
     {
 
         #region Keyboard Move
-        if(e_ControlMethod.Keyboard == currentControlMethod)
+        if (e_ControlMethod.Keyboard == currentControlMethod)
         {
             Vector2 direction;
             direction = Vector2.zero;
@@ -75,7 +93,6 @@ public class Paddle : MonoBehaviour {
             if (Input.GetKey(KeyCode.A)) //As long as there is no object in the way, move left
             {
                 direction = Vector2.left;
-                Debug.DrawRay(LeftBuffer.transform.position, Vector2.left, Color.red, 1.25f);
                 if (false == Physics2D.Raycast(LeftBuffer.transform.position, direction, distanceBuffer))
                 {
                     transform.Translate(Vector2.left * movementDampening);
@@ -84,7 +101,6 @@ public class Paddle : MonoBehaviour {
             if (Input.GetKey(KeyCode.D)) //As long as there is no object in the way, move right
             {
                 direction = Vector2.right;
-                Debug.DrawRay(RightBuffer.transform.position, Vector2.right, Color.red, 1.25f);
                 if (false == Physics2D.Raycast(RightBuffer.transform.position, Vector2.right, distanceBuffer))
                 {
                     transform.Translate(Vector2.right * movementDampening);
@@ -95,16 +111,28 @@ public class Paddle : MonoBehaviour {
         #endregion
 
         #region Mouse Move
-        if(e_ControlMethod.Mouse == currentControlMethod)
-        {
-            Vector2 mouseDelta;
-            mouseDelta.x = Input.GetAxis("Mouse X") * movementDampening;
-            mouseDelta.y = 0.0f;
-            transform.Translate(mouseDelta);
+        if (e_ControlMethod.Mouse == currentControlMethod)
+        { 
+            //if (Mathf.Abs(gameObject.transform.position.x) > Mathf.Abs(LeftMarker.transform.position.x))
+            //{
+            //    gameObject.transform.position = LeftMarker.transform.position;
+            //}
+            //else if (Mathf.Abs(gameObject.transform.position.x) > Mathf.Abs(RightMarker.transform.position.x))
+            //{
+            //    gameObject.transform.position = LeftMarker.transform.position;
+            //}
+            //else
+            //{
+                Vector2 mouseDelta;
+                mouseDelta.x = Input.GetAxis("Mouse X") * movementDampening;
+                mouseDelta.y = 0.0f;
+                transform.Translate(mouseDelta);
+            //}
+   
         }
-        #endregion
-
     }
+    #endregion
+
 
     public void SetControlMethod(e_ControlMethod cntrlMethod)
     {
