@@ -15,14 +15,8 @@ public class ReloadingManager : MonoBehaviour
 
     #region Private Fields
     /// <summary>
-    /// The transform attatched to the paddle game object.
+    /// Array that holds the block gameobjects
     /// </summary>
-    private Transform paddleTransform;
-    /// <summary>
-    /// The transform attatched to the ball game object.
-    /// </summary>
-    private Transform ballTransform;
-
     private GameObject[] goArray;
 
     private const string BLOCK_TAG = "Block";
@@ -40,8 +34,6 @@ public class ReloadingManager : MonoBehaviour
         Paddle = GameObject.FindGameObjectWithTag(PADDLE_NAME);
         Ball = GameObject.Find(BALL_NAME);
 
-        paddleTransform = Paddle.transform;
-        ballTransform = Ball.transform;
     }
 
     /// <summary>
@@ -54,13 +46,11 @@ public class ReloadingManager : MonoBehaviour
         {
             go.SetActive(true);
         }
-        Paddle.transform.position = paddleTransform.position;
-        Debug.Log("Curr pos: " + Paddle.transform.position + " wanted pos " + paddleTransform.position);
-        Ball.transform.position = ballTransform.position;
-        Ball.transform.rotation = ballTransform.rotation;
-
         Rigidbody2D rb2D = Ball.GetComponent<Rigidbody2D>();
         rb2D.velocity = Vector2.zero;
+
+        Paddle.transform.position = new Vector2(0.0f, -3.5f);
+        Ball.transform.position = new Vector2(0, 1.75f);
 
         MenuSystem menSys = GameObject.Find("_Keepers").GetComponent<MenuSystem>();
         menSys.UnPause();
