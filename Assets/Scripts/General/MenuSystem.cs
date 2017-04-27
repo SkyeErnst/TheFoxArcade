@@ -205,4 +205,12 @@ public class MenuSystem : MonoBehaviour
             UnPause();
         }
     }
+
+    /// <summary>
+    /// Imidietly exits the game with no promt
+    /// </summary>
+    public void QuitToOS()
+    {
+        Application.Quit();
+    }
 }
