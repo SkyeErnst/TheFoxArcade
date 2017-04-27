@@ -27,6 +27,10 @@ public class Block : BlockManager
     /// </summary>
     private static ParticleManager partMan;
     /// <summary>
+    /// Reference to Block Manager class
+    /// </summary>
+    private static BlockManager blockMan;
+    /// <summary>
     /// The type of block that this block is.
     /// </summary>
     private BlockTypes currType;
@@ -42,6 +46,7 @@ public class Block : BlockManager
     {
         scoreKeep = GameObject.Find("_Keepers").GetComponent<ScoreKeeping>();
         partMan = GameObject.Find("_Keepers").GetComponent<ParticleManager>();
+        blockMan = GameObject.Find("_Keepers").GetComponent<BlockManager>();
     }
 
     void OnCollisionEnter2D(Collision2D otherObject)
@@ -74,6 +79,7 @@ public class Block : BlockManager
             gameObject.SetActive(false);
             scoreKeep.UpdateScore();
             partMan.SpawnSystem(gameObject.transform.position, Vector3.up, ParticleManager.ParticleType.BlockBreak);
+            blockMan.BlocksDestroyed++;
         }
     }
 

@@ -24,6 +24,28 @@ public class BlockManager : MonoBehaviour
     protected Dictionary<int, Color> colorDict;
     #endregion
 
+    #region Public Properties
+    /// <summary>
+    /// The number of blocks that have been destroyed so far
+    /// </summary>
+    public int BlocksDestroyed
+    {
+        get
+        {
+            return blocksDestroyed;
+        }
+        set
+        {
+            blocksDestroyed = value;
+            if(2 == blocksDestroyed)
+            {
+                menSys.OnWinLose(MenuSystem.ActiveGame.Breakout, true);
+            }
+        }
+    }
+    #endregion
+
+
 
     #region Private Fields
     /// <summary>
@@ -41,12 +63,25 @@ public class BlockManager : MonoBehaviour
     /// </summary>
     private Block[] blockArray;
 
+    /// <summary>
+    /// Reference to the Random class from namespace system
+    /// </summary>
     private System.Random sysRand;
+
+    /// <summary>
+    /// Reference to menu system class
+    /// </summary>
+    private MenuSystem menSys;
 
     /// <summary>
     /// Tag of Block GameObjects
     /// </summary>
-    private readonly string blockTag = "Block";
+    private const string BLOCK_TAG = "Block";
+
+    /// <summary>
+    /// Wrapper variable for BlocksDestroyed Property
+    /// </summary>
+    private int blocksDestroyed = 0;
     #endregion
 
     public void Awake()
@@ -56,6 +91,7 @@ public class BlockManager : MonoBehaviour
         colorDict = new Dictionary<int, Color>();
         blockArray = new Block[51];
         goArray = new GameObject[51];
+        menSys = gameObject.GetComponent<MenuSystem>();
 
         colorDict.Add(0, Color.white);
         colorDict.Add(1, Color.red);
@@ -63,9 +99,9 @@ public class BlockManager : MonoBehaviour
         colorDict.Add(3, Color.blue);
         colorDict.Add(4, Color.black);
 
-        goArray = GameObject.FindGameObjectsWithTag(blockTag);
+        goArray = GameObject.FindGameObjectsWithTag(BLOCK_TAG);
 
-        //Loop over 
+        //Loop over game object array and assign random color to each object
         for (int i = 0; i < goArray.Length; i++)
         {
             blockArray[i] = goArray[i].gameObject.GetComponent<Block>();
@@ -89,7 +125,6 @@ public class BlockManager : MonoBehaviour
     /// <returns></returns>
     private int BiasedRandomNumber(int min, int max)
     {
-
         int biasedRan = sysRand.Next(min, max) - sysRand.Next(min, max);
         if(min > biasedRan)
         {

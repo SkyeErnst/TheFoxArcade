@@ -48,6 +48,8 @@ public class ReloadingManager : MonoBehaviour
         }
         Rigidbody2D rb2D = Ball.GetComponent<Rigidbody2D>();
         rb2D.velocity = Vector2.zero;
+        ScoreKeeping scoreKeep = GameObject.Find("_Keepers").GetComponent<ScoreKeeping>();
+        scoreKeep.ResetScore();
 
         Paddle.transform.position = new Vector2(0.0f, -3.5f);
         Ball.transform.position = new Vector2(0, 1.75f);

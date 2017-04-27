@@ -90,4 +90,9 @@ public class ScoreKeeping : MonoBehaviour
         scorePerHit = scorePerHitDefaultValue;
         
     }
+
+    public void ResetScore()
+    {
+        score = 0;
+    }
 }
