@@ -37,7 +37,7 @@ public class BlockManager : MonoBehaviour
         set
         {
             blocksDestroyed = value;
-            if(2 == blocksDestroyed)
+            if(51 == blocksDestroyed)
             {
                 menSys.OnWinLose(MenuSystem.ActiveGame.Breakout, true);
             }
