@@ -37,7 +37,8 @@ public class MenuSystem : MonoBehaviour
         /// Active when there is no arcade game being played
         /// </summary>
         NoGame = 0,
-        Breakout = 1
+        BlockBreak = 1,
+        Snek = 2
     }
     #endregion
 
@@ -80,7 +81,7 @@ public class MenuSystem : MonoBehaviour
 
     private void Start()
     {
-        activeGame = ActiveGame.Breakout;
+        activeGame = ActiveGame.Snek;
         GlobalPauseState = PauseState.Unpaused;
         Init();
     }
@@ -161,7 +162,7 @@ public class MenuSystem : MonoBehaviour
     /// </summary>
     public void UnPause()
     {
-        if(ActiveGame.Breakout == activeGame)
+        if(ActiveGame.BlockBreak == activeGame)
         {
             MakeActiveCanvas(Canvases.BreakoutGame);
         }
