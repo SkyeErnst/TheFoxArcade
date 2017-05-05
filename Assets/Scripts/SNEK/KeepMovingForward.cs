@@ -21,12 +21,16 @@ public class KeepMovingForward : MonoBehaviour
     private void Awake()
     {
         coru = MoveForward();
+    }
+
+    private void Start()
+    {
         StartCoroutine(coru);
     }
 
     /// <summary>
     /// Keeps the attachted object moving forward.
-    /// Pretty much only ment for the Snek object
+    /// Pretty much only meant for the Snek object
     /// </summary>
     /// <returns></returns>
     private IEnumerator MoveForward()
@@ -36,16 +40,16 @@ public class KeepMovingForward : MonoBehaviour
             switch (SnekControl.CurrentDesiredDirection)
             {
                 case SnekControl.DesiredDirection.Up:
-                    gameObject.transform.Translate(Vector2.up / 2);
+                    MoveSnekStack(Vector2.up);
                     break;
                 case SnekControl.DesiredDirection.Down:
-                    gameObject.transform.Translate(Vector2.down / 2);
+                    MoveSnekStack(Vector2.down);
                     break;
                 case SnekControl.DesiredDirection.Left:
-                    gameObject.transform.Translate(Vector2.left / 2);
+                    MoveSnekStack(Vector2.left);
                     break;
                 case SnekControl.DesiredDirection.Right:
-                    gameObject.transform.Translate(Vector2.right / 2);
+                    MoveSnekStack(Vector2.right);
                     break;
                 default:
                     break;

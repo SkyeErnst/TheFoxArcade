@@ -23,10 +23,11 @@ public class SnekSegmentController : MonoBehaviour
     {
         segmentList = new List<Segment>();
         segmentList.Add(SnekHead.GetComponent<Segment>());
+        Debug.Log(segmentList.Count);
     }
 
-    public static ref List<Segment> GetSegmentList()
+    public static List<Segment> GetSegmentList() // Look into pass by refference
     {
-        return ref segmentList;
+        return segmentList;
     }
 }
