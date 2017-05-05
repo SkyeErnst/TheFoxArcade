@@ -6,17 +6,27 @@ using UnityEngine;
 /// </summary>
 public class SnekSegmentController : MonoBehaviour
 {
+
+    #region Public Properties
+    
+    #endregion
+
     #region Public Fields
     public GameObject SnekHead;
     #endregion
 
     #region Private Fields
-    private List<Segment> segmentList;
+    private static List<Segment> segmentList;
     #endregion
 
     private void Awake()
     {
         segmentList = new List<Segment>();
         segmentList.Add(SnekHead.GetComponent<Segment>());
+    }
+
+    public static ref List<Segment> GetSegmentList()
+    {
+        return ref segmentList;
     }
 }

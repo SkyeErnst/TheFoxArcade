@@ -3,7 +3,7 @@
 public class Segment : MonoBehaviour
 {
     #region Enums
-    private enum SegmentType
+    public enum SegmentTypes
     {
         Head = 0,
         Body = 1,
@@ -11,16 +11,41 @@ public class Segment : MonoBehaviour
     }
     #endregion
 
+    #region Public Properties
+    public SegmentTypes SegmentType
+    {
+        get
+        {
+            return thisSegmentType;
+        }
+    }
+    #endregion
+
     #region Private Fields
-    private SegmentType thisSegmentType;
+    private SegmentTypes thisSegmentType;
     #endregion
 
     private void Awake()
     {
         if("SnekHead" == gameObject.tag)
         {
-            thisSegmentType = SegmentType.Head;
+            thisSegmentType = SegmentTypes.Head;
         }
+        string tag = gameObject.tag;
+        switch (tag)
+        {
+            case "SnekHead":
+                thisSegmentType = SegmentTypes.Head;
+                break;
+            case "SnekBody":
+                thisSegmentType = SegmentTypes.Body;
+                break;
+            case "SnekTail":
+                thisSegmentType = SegmentTypes.Tail;
+                break;
+        }
+
+
         //make swith block here. switch on segment type
     }
 }

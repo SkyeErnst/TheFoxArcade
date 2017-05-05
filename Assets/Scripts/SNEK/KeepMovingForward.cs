@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class KeepMovingForward : MonoBehaviour
 {
@@ -10,6 +11,11 @@ public class KeepMovingForward : MonoBehaviour
     private IEnumerator coru;
 
     private float waitTimeBeforeMovement = 0.25f;
+
+    /// <summary>
+    /// Diviser in the movement calculation
+    /// </summary>
+    private float movementDampen = 3.0f;
     #endregion
 
     private void Awake()
@@ -45,6 +51,21 @@ public class KeepMovingForward : MonoBehaviour
                     break;
             }
             yield return new WaitForSeconds(waitTimeBeforeMovement);
+        }
+    }
+
+    /// <summary>
+    /// Loops over snek segemnts and moves them all.
+    /// </summary>
+    private void MoveSnekStack(Vector2 movementVector)
+    {
+        List<Segment> segLis = new List<Segment>(SnekSegmentController.GetSegmentList());
+
+        foreach (Segment seg in segLis)
+        {
+            //Get the gameobject of each segment and transform it in the correct direction
+            GameObject go = seg.gameObject;
+            go.transform.Translate(movementVector / movementDampen);
         }
     }
 }
