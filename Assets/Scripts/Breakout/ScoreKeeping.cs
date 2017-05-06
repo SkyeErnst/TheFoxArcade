@@ -94,5 +94,6 @@ public class ScoreKeeping : MonoBehaviour
     public void ResetScore()
     {
         score = 0;
+        scoreText.text = score.ToString();
     }
 }
