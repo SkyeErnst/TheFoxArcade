@@ -24,7 +24,8 @@ public class Food : MonoBehaviour
     private void Awake ()
     {
         thisCol = gameObject.GetComponent<Collider>();
-        foodMan =GameObject.Find("_Keepers").GetComponent<FoodManager>();
+        foodMan = GameObject.Find("SnekHead").GetComponent<FoodManager>();
+        Debug.Log(foodMan.gameObject.transform.position);
         snekCol = GameObject.Find("SnekHead").GetComponent<Collider>();
 	}
 	
@@ -33,6 +34,7 @@ public class Food : MonoBehaviour
     {
 	    if(true == thisCol.bounds.Intersects(snekCol.bounds))
         {
+            foodMan.FoodEaten++;
             Destroy(gameObject);
         }
 	}

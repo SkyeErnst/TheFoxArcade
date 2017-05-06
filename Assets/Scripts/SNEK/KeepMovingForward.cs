@@ -10,12 +10,12 @@ public class KeepMovingForward : MonoBehaviour
     /// </summary>
     private IEnumerator coru;
 
-    private float waitTimeBeforeMovement = 0.25f;
+    private float waitTimeBeforeMovement = 0.1f;
 
     /// <summary>
     /// Diviser in the movement calculation
     /// </summary>
-    private float movementDampen = 3.0f;
+    private float movementDampen = 10.0f;
     #endregion
 
     private void Awake()

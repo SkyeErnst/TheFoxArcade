@@ -12,12 +12,25 @@ public class FoodManager : MonoBehaviour
         set
         {
             foodEaten = value;
+            snekSegControl.AddSegment();
+            // Tell segment controller to make a new segment
         }
     }
 
     #endregion
 
     #region Private Fields
+    /// <summary>
+    /// The ammount of food eaten so far. Stored here due to inability
+    /// to use auto-properties
+    /// </summary>
     private uint foodEaten = 0;
+
+    private SnekSegmentController snekSegControl;
     #endregion
+
+    private void Awake()
+    {
+        snekSegControl = gameObject.GetComponent<SnekSegmentController>();
+    }
 }
