@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Linq;
+using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -40,14 +41,26 @@ public class SnekSegmentController : MonoBehaviour
         return segmentList;
     }
 
+    private void Update()
+    {
+        List<Segment> segList = GetSegmentList();
+        for (int i = 0; i < segList.Count; i++)
+        {
+            Debug.Log("Iteration: " + i + " Segment Location " + segList[i].gameObject.transform.position);
+        }
+    }
+
     public void AddSegment()
     {
         // Find location of last segment and instantiate segment prefab at an offset from the last segment. Rename segments to new job (body / tail)
         List<Segment> segLis = GetSegmentList();
-        Transform last = segLis[segLis.Count - 1].gameObject.transform;
+        Transform last = segLis.Last().gameObject.transform;
         Vector2 wantedSpawnPos = last.position;
         wantedSpawnPos.y -= 5.0f;
-        GameObject go = Instantiate(BodySegmentPrefab, last.position, Quaternion.identity);
+        GameObject go = Instantiate(BodySegmentPrefab, last.position, last.rotation);
+        go.transform.position = wantedSpawnPos; //new 
         segmentList.Add(go.GetComponent<Segment>());
+        Segment segComp = go.GetComponent<Segment>();
+        segComp.SegmentType = Segment.SegmentTypes.Body;
     }
 }

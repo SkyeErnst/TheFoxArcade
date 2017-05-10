@@ -63,6 +63,11 @@ public class KeepMovingForward : MonoBehaviour
     /// </summary>
     private void MoveSnekStack(Vector2 movementVector)
     {
+        // This method needs to be changed. What should be done is this:
+        // Each segement will be a prefab containing the segment and an empty game object
+        // The empty game object is there as a marker to show where to move the segments to.
+        // Each time the movement function ticks. Everything is shifted and (if needed) rotated forward by an arbitrary but uniform amount. (However far feels "far enough")
+
         List<Segment> segLis = new List<Segment>(SnekSegmentController.GetSegmentList());
 
         foreach (Segment seg in segLis)

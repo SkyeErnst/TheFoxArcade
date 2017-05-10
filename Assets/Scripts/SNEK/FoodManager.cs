@@ -13,7 +13,6 @@ public class FoodManager : MonoBehaviour
         {
             foodEaten = value;
             snekSegControl.AddSegment();
-            // Tell segment controller to make a new segment
         }
     }
 

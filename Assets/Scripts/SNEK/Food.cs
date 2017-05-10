@@ -25,7 +25,6 @@ public class Food : MonoBehaviour
     {
         thisCol = gameObject.GetComponent<Collider>();
         foodMan = GameObject.Find("SnekHead").GetComponent<FoodManager>();
-        Debug.Log(foodMan.gameObject.transform.position);
         snekCol = GameObject.Find("SnekHead").GetComponent<Collider>();
 	}
 	

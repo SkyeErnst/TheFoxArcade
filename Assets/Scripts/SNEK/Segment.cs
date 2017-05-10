@@ -18,6 +18,10 @@ public class Segment : MonoBehaviour
         {
             return thisSegmentType;
         }
+        set
+        {
+            thisSegmentType = value;
+        }
     }
     #endregion
 
