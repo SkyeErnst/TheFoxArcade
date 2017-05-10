@@ -24,6 +24,8 @@ public class SnekSegmentController : MonoBehaviour
 
     #region Private Fields
     private static List<Segment> segmentList;
+
+    private float segmentOffset = 0.15f;
     #endregion
 
     private void Awake()
@@ -41,22 +43,13 @@ public class SnekSegmentController : MonoBehaviour
         return segmentList;
     }
 
-    private void Update()
-    {
-        List<Segment> segList = GetSegmentList();
-        for (int i = 0; i < segList.Count; i++)
-        {
-            Debug.Log("Iteration: " + i + " Segment Location " + segList[i].gameObject.transform.position);
-        }
-    }
-
     public void AddSegment()
     {
         // Find location of last segment and instantiate segment prefab at an offset from the last segment. Rename segments to new job (body / tail)
         List<Segment> segLis = GetSegmentList();
         Transform last = segLis.Last().gameObject.transform;
         Vector2 wantedSpawnPos = last.position;
-        wantedSpawnPos.y -= 5.0f;
+        wantedSpawnPos.y -= segmentOffset;
         GameObject go = Instantiate(BodySegmentPrefab, last.position, last.rotation);
         go.transform.position = wantedSpawnPos; //new 
         segmentList.Add(go.GetComponent<Segment>());
