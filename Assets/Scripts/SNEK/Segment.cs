@@ -23,10 +23,24 @@ public class Segment : MonoBehaviour
             thisSegmentType = value;
         }
     }
+    public Vector2 WantedMovementDirection
+    {
+        get
+        {
+            return wantedMovementDirection;
+        }
+
+        set
+        {
+            wantedMovementDirection = value;
+        }
+    }
     #endregion
 
     #region Private Fields
     private SegmentTypes thisSegmentType;
+
+    private Vector2 wantedMovementDirection;
     #endregion
 
     private void Awake()

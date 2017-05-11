@@ -45,15 +45,21 @@ public class SnekSegmentController : MonoBehaviour
 
     public void AddSegment()
     {
-        // Find location of last segment and instantiate segment prefab at an offset from the last segment. Rename segments to new job (body / tail)
+        // Find location of last segment and instantiate segment prefab at an offset from the last segment.
         List<Segment> segLis = GetSegmentList();
+
         Transform last = segLis.Last().gameObject.transform;
         Vector2 wantedSpawnPos = last.position;
+
         wantedSpawnPos.y -= segmentOffset;
+
         GameObject go = Instantiate(BodySegmentPrefab, last.position, last.rotation);
-        go.transform.position = wantedSpawnPos; //new 
         segmentList.Add(go.GetComponent<Segment>());
+
+        go.transform.position = wantedSpawnPos;
+
         Segment segComp = go.GetComponent<Segment>();
         segComp.SegmentType = Segment.SegmentTypes.Body;
+        segComp.WantedMovementDirection = SnekHead.GetComponent<Segment>().WantedMovementDirection;
     }
 }
