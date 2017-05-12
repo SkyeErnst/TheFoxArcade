@@ -85,20 +85,17 @@ public class KeepMovingForward : MonoBehaviour
 
         Vector2 originalHeadPos;
         //segDict.TryGetValue(segLis[0], out originalHeadPos);
+
         originalHeadPos = SnekHead.transform.position;
 
         SnekHead.transform.Translate(movementVector / movementDampen);
+
         if(0 < segLis.Count)
         {
-            segLis.Last<Segment>().gameObject.transform.position = originalHeadPos;
+            segLis.Last().gameObject.transform.position = originalHeadPos;
 
-            Vector2 lastPos;
             segLis.Insert(0, segLis.Last());
             segLis.RemoveAt(segLis.Count - 1);
-        }
-        else if(false == 1 < segLis.Count)
-        {
-            // Segent is just flipping bnack and foth. remove head from list and finish this part
         }
         
         // In a for loop, set the location of the moving segemnet then move that segment to correct location
