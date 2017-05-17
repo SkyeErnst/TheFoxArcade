@@ -81,7 +81,6 @@ public class KeepMovingForward : MonoBehaviour
     private void MoveSnekStack(Vector2 movementVector)
     {
         List<Segment> segLis = SnekSegmentController.GetSegmentList();
-        SortedDictionary<Segment, Vector2> segDict = SnekSegmentController.GetSegmentDict();
 
         Vector2 originalHeadPos;
         //segDict.TryGetValue(segLis[0], out originalHeadPos);

@@ -23,6 +23,6 @@ public class BottomEdge : MonoBehaviour
 
     private void OnCollisionEnter2D()
     {
-        menSys.OnWinLose(MenuSystem.ActiveGame.BlockBreak, false);
+        menSys.OnWinLose(MenuSystem.Games.BlockBreak, false);
     }
 }

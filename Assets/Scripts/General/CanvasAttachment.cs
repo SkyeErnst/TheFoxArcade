@@ -36,7 +36,13 @@ public class CanvasAttachment : MonoBehaviour
     /// menu functions, such as chaning settings and quiting the game.
     /// </summary>
     private const string GENERAL_CANVAS_ESCMENU = "GeneralCanvasESCMenu";
+    /// <summary>
+    /// The name inside the unity inspecter of the main menu canvas
+    /// </summary>
+    private const string MAIN_MENU = "MainMenu";
+
     #endregion
+
     private void Awake()
     {
         string goName = gameObject.name;
@@ -50,6 +56,9 @@ public class CanvasAttachment : MonoBehaviour
                 break;
             case GENERAL_CANVAS_ESCMENU:
                 canvasType = MenuSystem.Canvases.EscMenu;
+                break;
+            case MAIN_MENU:
+                canvasType = MenuSystem.Canvases.MainMenue;
                 break;
             default:
                 Debug.LogError("Something has gone wrong here");

@@ -29,16 +29,21 @@ public class MenuSystem : MonoBehaviour
         /// <summary>
         /// The menu that comes up when the player his the esc key
         /// </summary>
-        EscMenu = 2
+        EscMenu = 2,
+        /// <summary>
+        /// The menu of the game before loading
+        /// </summary>
+        MainMenue = 3
     }
-    public enum ActiveGame
+    public enum Games
     {
         /// <summary>
         /// Active when there is no arcade game being played
         /// </summary>
         NoGame = 0,
         BlockBreak = 1,
-        Snek = 2
+        Snek = 2,
+        MainMenu = 3
     }
     #endregion
 
@@ -58,6 +63,7 @@ public class MenuSystem : MonoBehaviour
     /// Stores all the availible canvases in a way that is searchable
     /// </summary>
     public Dictionary<Canvases, Canvas> CanvasDict;
+
     #endregion
 
     #region Private Fields
@@ -69,19 +75,19 @@ public class MenuSystem : MonoBehaviour
     /// <summary>
     /// The text to be displayed when a breakout level is WON
     /// </summary>
-    private const string BREKOUT_WIN_TEXT = "Cleared! \n Nice job!";
+    private const string BLOCKBREAK_WIN_TEXT = "Cleared! \n Nice job!";
 
     /// <summary>
     /// The text to be displayed when a breakout level is LOST
     /// </summary>
-    private const string BREKOUT_LOSE_TEXT = "Nice try...";
+    private const string BLOCKBREAK_LOSE_TEXT = "Nice try...";
 
-    private ActiveGame activeGame;
+    private Games activeGame;
     #endregion
 
     private void Start()
     {
-        activeGame = ActiveGame.Snek;
+        activeGame = Games.MainMenu;
         GlobalPauseState = PauseState.Unpaused;
         Init();
     }
@@ -135,18 +141,18 @@ public class MenuSystem : MonoBehaviour
     /// </summary>
     /// <param name="activeGame">The arcade game currently being played</param>
     /// <param name="winLose">Weather the game was won or lost. True = won, false = lost</param>
-    public void OnWinLose(ActiveGame activeGame, bool winLose)
+    public void OnWinLose(Games activeGame, bool winLose)
     {
         if(true == winLose)
         {
-            WinLoseResultDisplayText.text = BREKOUT_WIN_TEXT;
+            WinLoseResultDisplayText.text = BLOCKBREAK_WIN_TEXT;
             Pause();
             MakeActiveCanvas(Canvases.BreakoutWinLose);
             CursorManager.ChangeCursorState(CursorLockMode.None);
         }
         else if (false == winLose)
         {
-            WinLoseResultDisplayText.text = BREKOUT_LOSE_TEXT;
+            WinLoseResultDisplayText.text = BLOCKBREAK_LOSE_TEXT;
             Pause();
             MakeActiveCanvas(Canvases.BreakoutWinLose);
             CursorManager.ChangeCursorState(CursorLockMode.None);
@@ -162,13 +168,13 @@ public class MenuSystem : MonoBehaviour
     /// </summary>
     public void UnPause()
     {
-        if(ActiveGame.BlockBreak == activeGame)
+        if(Games.BlockBreak == activeGame)
         {
             MakeActiveCanvas(Canvases.BreakoutGame);
         }
         Time.timeScale = 1.0f;
         GlobalPauseState = PauseState.Unpaused;
-        //MakeActiveCanvas(Canvases.BreakoutGame);
+        MakeActiveCanvas(Canvases.BreakoutGame);
         CursorManager.ChangeCursorState(CursorLockMode.Locked);
     }
     /// <summary>

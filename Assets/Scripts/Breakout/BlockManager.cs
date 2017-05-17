@@ -39,7 +39,7 @@ public class BlockManager : MonoBehaviour
             blocksDestroyed = value;
             if(51 == blocksDestroyed)
             {
-                menSys.OnWinLose(MenuSystem.ActiveGame.BlockBreak, true);
+                menSys.OnWinLose(MenuSystem.Games.BlockBreak, true);
             }
         }
     }
