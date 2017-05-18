@@ -40,7 +40,7 @@ public class GameManager : MonoBehaviour
 
         Debug.LogWarning("Using invoke to disable gameobjects. If there are" +
             " random null reff errors, this may be why");
-        Invoke("DisableAllGames", 0.005f);
+        Invoke("DisableAllGames", 2.0f);
     }
 
     /// <summary>

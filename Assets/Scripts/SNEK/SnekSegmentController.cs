@@ -25,7 +25,6 @@ public class SnekSegmentController : MonoBehaviour
 
     #region Private Fields
     private static List<Segment> segmentList;
-    private static SortedDictionary<Segment, Vector2> segmentDict;
 
     private float segmentOffset = 0.15f;
 
@@ -35,10 +34,7 @@ public class SnekSegmentController : MonoBehaviour
     private void Awake()
     {
         segmentList = new List<Segment>();
-        segmentDict = new SortedDictionary<Segment, Vector2>();
 
-        //segmentList.Add(SnekHead.GetComponent<Segment>());
-        //segmentDict.Add(SnekHead.GetComponent<Segment>(), SnekHead.transform.position);
     }
 
     /// <summary>
@@ -48,11 +44,6 @@ public class SnekSegmentController : MonoBehaviour
     public static List<Segment> GetSegmentList() // Look into pass by reference
     {
         return segmentList;
-    }
-
-    public static SortedDictionary<Segment, Vector2> GetSegmentDict()
-    {
-        return segmentDict;
     }
 
     /// <summary>
@@ -88,13 +79,11 @@ public class SnekSegmentController : MonoBehaviour
         segComp.SegmentType = Segment.SegmentTypes.Body;
         segComp.WantedMovementDirection = SnekHead.GetComponent<Segment>().WantedMovementDirection;
 
-       //segmentDict.Add(segComp, go.transform.position);
     }
 
     public void ResetSegments()
     {
         segmentList.Clear();
-        segmentDict.Clear();
         segmentsSpawned = 0;
     }
 }

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections;
 
 public class FoodManager : MonoBehaviour
 {
@@ -26,10 +27,17 @@ public class FoodManager : MonoBehaviour
     private uint foodEaten = 0;
 
     private SnekSegmentController snekSegControl;
+
+    private float timeBetweenFoodSpawn = 5.0f;
     #endregion
 
     private void Awake()
     {
         snekSegControl = gameObject.GetComponent<SnekSegmentController>();
+    }
+
+    private IEnumerator SpawnFood()
+    {
+        yield return new WaitForSeconds(timeBetweenFoodSpawn);
     }
 }
