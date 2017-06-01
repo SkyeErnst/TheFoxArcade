@@ -40,7 +40,11 @@ public class GameManager : MonoBehaviour
 
         Debug.LogWarning("Using invoke to disable gameobjects. If there are" +
             " random null reff errors, this may be why");
-        Invoke("DisableAllGames", 2.0f);
+    }
+
+    private void LateUpdate()
+    {
+        DisableAllGames();
     }
 
     /// <summary>
@@ -90,10 +94,14 @@ public class GameManager : MonoBehaviour
         foreach (GameObject enableThis in enable)
         {
             enableThis.SetActive(true);
+            Debug.Log("Activated " + enableThis.name);
+            Debug.Log("Hir " + enableThis.activeInHierarchy);
+            Debug.Log("self " + enableThis.activeSelf);
         }
         foreach (GameObject disableThis in disable)
         {
             disableThis.SetActive(false);
+            Debug.Log("Disabled " + disableThis.name);
         }
 
     }
