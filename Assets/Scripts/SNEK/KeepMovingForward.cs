@@ -29,13 +29,13 @@ public class KeepMovingForward : MonoBehaviour
     {
         coru = MoveForward();
         snekHeadSegment = GetComponent<Segment>();
+        //StartCoroutine(coru);
+    }
+    
+    private void Start()
+    {
         StartCoroutine(coru);
     }
-
-    //private void Start()
-    //{
-    //    StartCoroutine(coru);
-    //}
 
     /// <summary>
     /// Keeps the attachted object moving forward.
@@ -81,8 +81,8 @@ public class KeepMovingForward : MonoBehaviour
     /// </summary>
     private void MoveSnekStack(Vector2 movementVector)
     {
+        Debug.Log("Method called");
         List<Segment> segLis = new List<Segment>(SnekSegmentController.GetSegmentList());
-        Debug.Log(segLis.Count);
         Vector2 originalHeadPos;
 
         originalHeadPos = SnekHead.transform.position;
