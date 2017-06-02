@@ -18,13 +18,25 @@ public class GameManager : MonoBehaviour
 
     private List<GameObject> blockBreakChildren;
     private List<GameObject> snekChildren;
+
+    private List<GameObject> gameParents;
+
+    /// <summary>
+    /// True when the inital setup should be run.
+    /// Used exclusivly for LateUpdate in this class.
+    /// </summary>
+    private bool runSetup = true;
     #endregion
 
     private void Awake()
     {
         blockBreakChildren = new List<GameObject>();
         snekChildren = new List<GameObject>();
+        gameParents = new List<GameObject>();
         gameDict = new Dictionary<MenuSystem.Games, List<GameObject>>();
+
+        gameParents.Add(BlockBreakParent);
+        gameParents.Add(SnekParent);
 
         foreach (Transform child in BlockBreakParent.transform)
         {
@@ -44,13 +56,37 @@ public class GameManager : MonoBehaviour
 
     private void LateUpdate()
     {
-        DisableAllGames();
+        if(true == runSetup)
+        {
+            DisableAllGames();
+            runSetup = false;
+        }
     }
 
     /// <summary>
     /// Activates the given game. Also deactivates all other games
     /// </summary>
     /// <param name="gameToMakeActive"></param>
+    //public void MakeActiveGame(MenuSystem.Games gameToMakeActive)
+    //{
+    //    // Add all parent objects to list. Nested foreach loop to loop over parents and their children to activate / deactiveate as needed
+    //    switch (gameToMakeActive)
+    //    {
+    //        case MenuSystem.Games.NoGame:
+    //            break;
+    //        case MenuSystem.Games.BlockBreak:
+    //            PreformSort(MenuSystem.Games.BlockBreak);
+    //            break;
+    //        case MenuSystem.Games.Snek:
+    //            PreformSort(MenuSystem.Games.Snek);
+    //            break;
+    //        case MenuSystem.Games.MainMenu:
+    //            break;
+    //        default:
+    //            break;
+    //    }
+    //}
+
     public void MakeActiveGame(MenuSystem.Games gameToMakeActive)
     {
         // Add all parent objects to list. Nested foreach loop to loop over parents and their children to activate / deactiveate as needed
@@ -59,10 +95,10 @@ public class GameManager : MonoBehaviour
             case MenuSystem.Games.NoGame:
                 break;
             case MenuSystem.Games.BlockBreak:
-                PreformSort(MenuSystem.Games.BlockBreak);
+                //PreformSort(MenuSystem.Games.BlockBreak);
                 break;
             case MenuSystem.Games.Snek:
-                PreformSort(MenuSystem.Games.Snek);
+                //PreformSort(MenuSystem.Games.Snek);
                 break;
             case MenuSystem.Games.MainMenu:
                 break;
@@ -73,47 +109,75 @@ public class GameManager : MonoBehaviour
 
     private void PreformSort(MenuSystem.Games wantedGame)
     {
-        List<GameObject> enable = new List<GameObject>();
-        List<GameObject> disable = new List<GameObject>();
-
-        foreach (KeyValuePair<MenuSystem.Games, List<GameObject>> item in gameDict)
+        Debug.Log("Sorting!");
+        foreach (var go in gameParents)
         {
-            if(wantedGame == item.Key)
+            if(wantedGame.ToString() == go.name)
             {
-                gameDict.TryGetValue(item.Key, out enable);
+                Debug.Log("Enabiling " + go.name);
+                go.SetActive(true);
             }
             else
             {
-                foreach (GameObject go in item.Value)
-                {
-                    disable.Add(go);
-                }
+                Debug.Log("Wanted game: " + wantedGame.ToString());
+                go.SetActive(false);
             }
         }
-
-        foreach (GameObject enableThis in enable)
-        {
-            enableThis.SetActive(true);
-            Debug.Log("Activated " + enableThis.name);
-            Debug.Log("Hir " + enableThis.activeInHierarchy);
-            Debug.Log("self " + enableThis.activeSelf);
-        }
-        foreach (GameObject disableThis in disable)
-        {
-            disableThis.SetActive(false);
-            Debug.Log("Disabled " + disableThis.name);
-        }
-
     }
+
+    //private void PreformSort(MenuSystem.Games wantedGame)
+    //{
+    //    List<GameObject> enable = new List<GameObject>();
+    //    List<GameObject> disable = new List<GameObject>();
+
+    //    foreach (KeyValuePair<MenuSystem.Games, List<GameObject>> item in gameDict)
+    //    {
+    //        if(wantedGame == item.Key)
+    //        {
+    //            gameDict.TryGetValue(item.Key, out enable);
+    //        }
+    //        else
+    //        {
+    //            foreach (GameObject go in item.Value)
+    //            {
+    //                disable.Add(go);
+    //            }
+    //        }
+    //    }
+
+    //    foreach (GameObject enableThis in enable)
+    //    {
+    //        enableThis.SetActive(true);
+    //        Debug.Log("Activated " + enableThis.name);
+    //        Debug.Log("Hir " + enableThis.activeInHierarchy);
+    //        Debug.Log("self " + enableThis.activeSelf);
+    //    }
+    //    foreach (GameObject disableThis in disable)
+    //    {
+    //        disableThis.SetActive(false);
+    //        Debug.Log("Disabled " + disableThis.name);
+    //    }
+
+    //}
+
+    //public void DisableAllGames()
+    //{
+    //    foreach (KeyValuePair<MenuSystem.Games, List<GameObject>> item in gameDict)
+    //    {
+    //        foreach (GameObject go in item.Value)
+    //        {
+    //            go.SetActive(false);
+    //        }
+    //    }
+    //}
 
     public void DisableAllGames()
     {
-        foreach (KeyValuePair<MenuSystem.Games, List<GameObject>> item in gameDict)
+        Debug.Log("Disabling all games");
+        foreach (var go in gameParents)
         {
-            foreach (GameObject go in item.Value)
-            {
-                go.SetActive(false);
-            }
+            Debug.Log("Disabling " + go.name);
+            go.SetActive(false);
         }
     }
 
