@@ -38,9 +38,9 @@ public class ReloadingManager : MonoBehaviour
 
     /// <summary>
     /// Loops through return of GameOBject.FindObjecstWithTag for tag Block and unhides them.
-    /// Also re assigns original transform to paddle and ball. Will also reset velocity of ball to zero.
+    /// Also re assigns original transform to paddle and ball. Resets velocity of ball to zero.
     /// </summary>
-    public void ResetGame()
+    public void ResetBlockBreak()
     {
         foreach (GameObject go in goArray)
         {
