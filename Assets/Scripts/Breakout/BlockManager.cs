@@ -107,7 +107,9 @@ public class BlockManager : MonoBehaviour
             blockArray[i] = goArray[i].gameObject.GetComponent<Block>();
 
             int rand = BiasedRandomNumber(0, 5);
+
             Color newColor;
+
             if(true == colorDict.TryGetValue(rand, out newColor))
             {
                 blockArray[i].ChangeBlockCollor(newColor);

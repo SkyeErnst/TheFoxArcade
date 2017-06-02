@@ -34,7 +34,6 @@ public class SnekSegmentController : MonoBehaviour
     private void Awake()
     {
         segmentList = new List<Segment>();
-
     }
 
     /// <summary>

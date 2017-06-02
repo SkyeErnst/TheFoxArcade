@@ -29,7 +29,6 @@ public class KeepMovingForward : MonoBehaviour
     {
         coru = MoveForward();
         snekHeadSegment = GetComponent<Segment>();
-        //StartCoroutine(coru);
     }
     
     private void Start()
@@ -71,17 +70,21 @@ public class KeepMovingForward : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Wrapper method to prevent code duplication in MoveForward method
+    /// </summary>
+    /// <param name="wantedDir"></param>
     private void MoveSnek(Vector2 wantedDir)
     {
         Segment segHead = SnekHead.GetComponent<Segment>();
         segHead.WantedMovementDirection = wantedDir; 
     }
+
     /// <summary>
-    /// Loops over snek segemnts and moves them all.
+    /// Moves head forward and moves tail segment to last head position
     /// </summary>
     private void MoveSnekStack(Vector2 movementVector)
     {
-        Debug.Log("Method called");
         List<Segment> segLis = new List<Segment>(SnekSegmentController.GetSegmentList());
         Vector2 originalHeadPos;
 
@@ -96,5 +99,21 @@ public class KeepMovingForward : MonoBehaviour
             segLis.Insert(0, segLis.Last());
             segLis.RemoveAt(segLis.Count - 1);
         }
+    }
+
+    /// <summary>
+    /// Restarts the movement coroutine.
+    /// </summary>
+    public void RestartMovement()
+    {
+        StartCoroutine(coru);
+    }
+
+    /// <summary>
+    /// Stops the movement coroutine.
+    /// </summary>
+    public void StopMovement()
+    {
+        StopCoroutine(coru);
     }
 }
