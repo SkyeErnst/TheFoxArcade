@@ -19,6 +19,16 @@ public class FoodManager : MonoBehaviour
 
     #endregion
 
+    #region Public Fields
+
+    public Transform FoodPrefab;
+    public Transform LeftBoarder;
+    public Transform RightBoarder;
+    public Transform UpperBoarder;
+    public Transform LowerBoarder;
+
+    #endregion
+
     #region Private Fields
     /// <summary>
     /// The ammount of food eaten so far. Stored here due to inability
@@ -29,15 +39,44 @@ public class FoodManager : MonoBehaviour
     private SnekSegmentController snekSegControl;
 
     private float timeBetweenFoodSpawn = 5.0f;
+
+    private Vector2 foodSpawnPoint;
+
+    private IEnumerator foodCoru;
     #endregion
 
     private void Awake()
     {
         snekSegControl = gameObject.GetComponent<SnekSegmentController>();
+        foodCoru = SpawnFood();
     }
+
+    // Still needs way to start and stop corotine
 
     private IEnumerator SpawnFood()
     {
-        yield return new WaitForSeconds(timeBetweenFoodSpawn);
+        while(true)
+        {
+            foodSpawnPoint.x = UnityEngine.Random.Range(LeftBoarder.position.x, RightBoarder.position.x);
+            foodSpawnPoint.y = UnityEngine.Random.Range(UpperBoarder.position.y, LowerBoarder.position.y);
+
+            Instantiate(FoodPrefab, foodSpawnPoint, Quaternion.identity);
+
+            yield return new WaitForSeconds(timeBetweenFoodSpawn);
+        }
     }
+
+    #region Public Methods
+
+    public void StartSpawningFood()
+    {
+        StartCoroutine(foodCoru);
+    }
+
+    public void StopSpawningFood()
+    {
+        StopCoroutine(foodCoru);
+    }
+
+    #endregion
 }
