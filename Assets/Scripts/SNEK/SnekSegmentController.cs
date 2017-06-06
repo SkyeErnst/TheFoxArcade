@@ -45,6 +45,11 @@ public class SnekSegmentController : MonoBehaviour
         return segmentList;
     }
 
+    public void ClearSegmentList()
+    {
+        segmentList.Clear();
+    }
+
     /// <summary>
     /// Adds a new segment to the back of the snek
     /// </summary>
@@ -73,6 +78,7 @@ public class SnekSegmentController : MonoBehaviour
         go.transform.position = wantedSpawnPos;
         go.name = "BodySegment " + segmentsSpawned;
         segmentsSpawned++;
+        go.tag = "Segment";
 
         Segment segComp = go.GetComponent<Segment>();
         segComp.SegmentType = Segment.SegmentTypes.Body;

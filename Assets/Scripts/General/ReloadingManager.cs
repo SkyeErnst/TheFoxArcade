@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
+
 
 public class ReloadingManager : MonoBehaviour
 {
@@ -11,13 +13,18 @@ public class ReloadingManager : MonoBehaviour
     /// The object that hits and destroys blocks
     /// </summary>
     public GameObject Ball;
+    /// <summary>
+    /// The head of the snek. This is where most snek related classes
+    /// are attatched.
+    /// </summary>
+    public GameObject SnekHead;
     #endregion
 
     #region Private Fields
     /// <summary>
     /// Array that holds the block gameobjects
     /// </summary>
-    private GameObject[] goArray;
+    private GameObject[] blockgoArray;
 
     private const string BLOCK_TAG = "Block";
     private const string PADDLE_NAME = "Paddle";
@@ -30,7 +37,7 @@ public class ReloadingManager : MonoBehaviour
     /// </summary>
     private void Awake()
     {
-        goArray = GameObject.FindGameObjectsWithTag(BLOCK_TAG);
+        blockgoArray = GameObject.FindGameObjectsWithTag(BLOCK_TAG);
         Paddle = GameObject.FindGameObjectWithTag(PADDLE_NAME);
         Ball = GameObject.Find(BALL_NAME);
 
@@ -40,9 +47,9 @@ public class ReloadingManager : MonoBehaviour
     /// Loops through return of GameOBject.FindObjecstWithTag for tag Block and unhides them.
     /// Also re assigns original transform to paddle and ball. Resets velocity of ball to zero.
     /// </summary>
-    public void ResetBlockBreak()
+    private void RestartBlockBreak()
     {
-        foreach (GameObject go in goArray)
+        foreach (GameObject go in blockgoArray)
         {
             go.SetActive(true);
         }
@@ -58,4 +65,72 @@ public class ReloadingManager : MonoBehaviour
         menSys.MakeActiveCanvas(MenuSystem.Canvases.BreakoutGame);
         menSys.UnPause();
     }
+
+    private void RestartSnek()
+    {
+        SnekSegmentController snekSegCtrl = GameObject.Find("SnekHead").GetComponent<SnekSegmentController>();
+        GameObject[] foods = new GameObject[GameObject.FindGameObjectsWithTag("Food").Length];
+        GameObject[] segments = new GameObject[GameObject.FindGameObjectsWithTag("Segment").Length];
+
+        SnekHead.transform.position = Vector2.zero;
+        SnekHead.GetComponent<FoodManager>().ResetFoodCounter();
+
+        
+        foods = GameObject.FindGameObjectsWithTag("Food");
+
+        
+        segments = GameObject.FindGameObjectsWithTag("Segment");
+
+        foreach (var go in foods)
+        {
+            Destroy(go);
+        }
+
+        foreach (var go in segments)
+        {
+            Destroy(go);
+        }
+
+
+        if(0 != SnekSegmentController.GetSegmentList().Count)
+        {
+            List<Segment> segLis = new List<Segment>(SnekSegmentController.GetSegmentList());
+
+            foreach (var seg in segLis)
+            {
+                Destroy(seg);
+            }
+        }
+        snekSegCtrl.ClearSegmentList();
+    }
+
+    public void ResetGame(MenuSystem.Games gameToReset)
+    {
+        switch (gameToReset)
+        {
+            case MenuSystem.Games.NoGame:
+                break;
+            case MenuSystem.Games.BlockBreak:
+                RestartBlockBreak();
+                break;
+            case MenuSystem.Games.Snek:
+                RestartSnek();
+                break;
+            case MenuSystem.Games.MainMenu:
+                break;
+            default:
+                break;
+        }
+    }
+
+    public void ResetBlockBreak()
+    {
+        ResetGame(MenuSystem.Games.BlockBreak);
+    }
+
+    public void ResetSnek()
+    {
+        ResetGame(MenuSystem.Games.Snek);
+    }
+
 }

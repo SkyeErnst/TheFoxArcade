@@ -78,5 +78,13 @@ public class FoodManager : MonoBehaviour
         StopCoroutine(foodCoru);
     }
 
+    /// <summary>
+    /// Sets the number of food eaten back to zero.
+    /// </summary>
+    public void ResetFoodCounter()
+    {
+        foodEaten = 0;
+    }
+
     #endregion
 }
