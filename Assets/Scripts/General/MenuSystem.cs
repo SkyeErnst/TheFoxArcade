@@ -33,7 +33,7 @@ public class MenuSystem : MonoBehaviour
         /// <summary>
         /// The menu of the game before loading
         /// </summary>
-        MainMenue = 3
+        MainMenu = 3
     }
     public enum Games
     {
@@ -64,6 +64,7 @@ public class MenuSystem : MonoBehaviour
     /// </summary>
     public Dictionary<Canvases, Canvas> CanvasDict;
 
+    public Dropdown GameDropdown;
     #endregion
 
     #region Private Fields
@@ -82,13 +83,23 @@ public class MenuSystem : MonoBehaviour
     /// </summary>
     private const string BLOCKBREAK_LOSE_TEXT = "Nice try...";
 
+    /// <summary>
+    /// Local variable of the currently active game. See ActiveGame for more details.
+    /// </summary>
     private Games activeGame;
+
+    /// <summary>
+    /// Whether or not the dropdown on the main menu is being dislayed
+    /// </summary>
+    private bool dropdownIsDisplayed = false;
+
     #endregion
 
     private void Start()
     {
         activeGame = Games.MainMenu;
         GlobalPauseState = PauseState.Unpaused;
+        GameDropdown.enabled = dropdownIsDisplayed;
         Init();
     }
     /// <summary>
@@ -107,7 +118,7 @@ public class MenuSystem : MonoBehaviour
 
             CanvasDict.Add(typeToAdd, canvasToAdd);
         }
-        MakeActiveCanvas(Canvases.BreakoutGame);
+        MakeActiveCanvas(Canvases.MainMenu);
     }
     /// <summary>
     /// Makes the passed in canvas active and setts all others to inactive
@@ -211,6 +222,13 @@ public class MenuSystem : MonoBehaviour
         {
             UnPause();
         }
+    }
+
+    public void SwitchDropdownState()
+    {
+        dropdownIsDisplayed = !dropdownIsDisplayed;
+
+        GameDropdown.enabled = dropdownIsDisplayed;
     }
 
     /// <summary>

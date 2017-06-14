@@ -92,8 +92,6 @@ public class KeepMovingForward : MonoBehaviour
 
         SnekHead.transform.Translate(movementVector / movementDampen);
 
-        Debug.Log("segCount: " + segLis.Count);
-
         if(0 < segLis.Count)
         {
             

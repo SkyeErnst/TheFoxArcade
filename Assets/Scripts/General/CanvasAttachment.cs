@@ -58,7 +58,7 @@ public class CanvasAttachment : MonoBehaviour
                 canvasType = MenuSystem.Canvases.EscMenu;
                 break;
             case MAIN_MENU:
-                canvasType = MenuSystem.Canvases.MainMenue;
+                canvasType = MenuSystem.Canvases.MainMenu;
                 break;
             default:
                 Debug.LogError("Something has gone wrong here");
