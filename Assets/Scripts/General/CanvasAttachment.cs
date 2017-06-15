@@ -25,7 +25,7 @@ public class CanvasAttachment : MonoBehaviour
     /// The name inside the unity inspector of the main breakout canvas, the one that
     /// displays the score and score multplier
     /// </summary>
-    private const string BREAKOUT_CANVAS_MAIN = "BreakoutCanvas";
+    private const string BLOCKBREAK_CANVAS_MAIN = "BreakoutCanvas";
     /// <summary>
     /// The name inside the unity inspecter of the breakout canvas that deals with 
     /// displaying the text and buttons related to the winning and losing
@@ -41,6 +41,8 @@ public class CanvasAttachment : MonoBehaviour
     /// </summary>
     private const string MAIN_MENU = "MainMenu";
 
+    private const string SNEK_CANVAS = "SnekCanvas";
+
     #endregion
 
     private void Awake()
@@ -48,7 +50,7 @@ public class CanvasAttachment : MonoBehaviour
         string goName = gameObject.name;
         switch (name)
         {
-            case BREAKOUT_CANVAS_MAIN:
+            case BLOCKBREAK_CANVAS_MAIN:
                 canvasType = MenuSystem.Canvases.BreakoutGame;
                 break;
             case BREAKOUT_CANVAS_WINLOSE:

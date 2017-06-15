@@ -17,7 +17,7 @@ public class MenuSystem : MonoBehaviour
     public enum Canvases
     {
         /// <summary>
-        /// The main canvas for the breakout game.
+        /// The main canvas for the Blockbreak game.
         /// Contains information such as score and score multiplier
         /// </summary>
         BreakoutGame = 0,
@@ -33,7 +33,12 @@ public class MenuSystem : MonoBehaviour
         /// <summary>
         /// The menu of the game before loading
         /// </summary>
-        MainMenu = 3
+        MainMenu = 3,
+        /// <summary>
+        /// The main canvas for the snek game
+        /// </summary>
+        SnekGame = 4
+
     }
     public enum Games
     {
@@ -140,13 +145,16 @@ public class MenuSystem : MonoBehaviour
         MakeActiveCanvas(Canvases.MainMenu);
     }
 
+    /// <summary>
+    /// Delegate listener for when the dropdown value changes on the main menu
+    /// </summary>
+    /// <param name="target"></param>
     private void DropdownValueChangedListener(Dropdown target)
     {
-        Debug.Log("Selected: " + target.value);
         GameManagerRef.MakeActiveGame((Games)target.value);
     }
     /// <summary>
-    /// Makes the passed in canvas active and setts all others to inactive
+    /// Makes the passed in canvas active and sets all others to inactive
     /// </summary>
     /// <param name="canvasToDisplay"></param>
     public void MakeActiveCanvas(Canvases canvasToDisplay)

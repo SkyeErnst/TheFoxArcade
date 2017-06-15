@@ -11,6 +11,8 @@ public class GameManager : MonoBehaviour
     public GameObject BlockBreakParent;
     public GameObject SnekParent;
 
+    public MenuSystem MenSys;
+
     #endregion
 
     #region Private Fields
@@ -47,7 +49,8 @@ public class GameManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Activates the given game. Also deactivates all other games
+    /// Activates the given game. Also deactivates all other games and 
+    /// calls Make Active Canvas to setup the correct canvas.
     /// </summary>
     /// <param name="gameToMakeActive">Game to be made active</param>
     public void MakeActiveGame(MenuSystem.Games gameToMakeActive)
@@ -82,6 +85,22 @@ public class GameManager : MonoBehaviour
             if(wantedGame.ToString() == go.name)
             {
                 go.SetActive(true);
+                switch (wantedGame)
+                {
+                    case MenuSystem.Games.BlockBreak:
+                        MenSys.MakeActiveCanvas(MenuSystem.Canvases.BreakoutGame);
+                        break;
+                    case MenuSystem.Games.Snek:
+                        MenSys.MakeActiveCanvas(MenuSystem.Canvases.SnekGame);
+                        break;
+                    case MenuSystem.Games.MainMenu:
+                        MenSys.MakeActiveCanvas(MenuSystem.Canvases.MainMenu);
+                        break;
+                    case MenuSystem.Games.NoGame:
+                        break;
+                    default:
+                        break;
+                }
             }
             else
             {
