@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
+using UnityEngine.Events;
 
 public class MenuSystem : MonoBehaviour
 {
@@ -37,13 +37,14 @@ public class MenuSystem : MonoBehaviour
     }
     public enum Games
     {
-        /// <summary>
-        /// Active when there is no arcade game being played
-        /// </summary>
-        NoGame = 0,
+        
         BlockBreak = 1,
         Snek = 2,
-        MainMenu = 3
+        MainMenu = 100,
+        // <summary>
+        /// Active when there is no arcade game being played
+        /// </summary>
+        NoGame = 200
     }
     #endregion
 
@@ -52,6 +53,7 @@ public class MenuSystem : MonoBehaviour
     /// Current state of being -Globaly- paused or unpaused
     /// </summary>
     public static PauseState GlobalPauseState { get; set; }
+    public static Games ActiveGame { get; set; }
     #endregion
 
     #region Public Fields
@@ -64,7 +66,16 @@ public class MenuSystem : MonoBehaviour
     /// </summary>
     public Dictionary<Canvases, Canvas> CanvasDict;
 
-    public Dropdown GameDropdown;
+    /// <summary>
+    /// The Game Object that has the dropdown component attached
+    /// </summary>
+    public GameObject GamesDropdownGO;
+
+    /// <summary>
+    /// Reference to the game manager class. Used in the Dropdown delegate to 
+    /// load new games.
+    /// </summary>
+    public GameManager GameManagerRef;
     #endregion
 
     #region Private Fields
@@ -84,22 +95,30 @@ public class MenuSystem : MonoBehaviour
     private const string BLOCKBREAK_LOSE_TEXT = "Nice try...";
 
     /// <summary>
-    /// Local variable of the currently active game. See ActiveGame for more details.
-    /// </summary>
-    private Games activeGame;
-
-    /// <summary>
     /// Whether or not the dropdown on the main menu is being dislayed
     /// </summary>
     private bool dropdownIsDisplayed = false;
+
+    /// <summary>
+    /// Reference to the dropdown component 
+    /// </summary>
+    private Dropdown gamesDropdown;
 
     #endregion
 
     private void Start()
     {
-        activeGame = Games.MainMenu;
+        gamesDropdown = GamesDropdownGO.GetComponent<Dropdown>();
+
+        gamesDropdown.onValueChanged.AddListener(delegate 
+        {
+            DropdownValueChangedListener(gamesDropdown);
+        }
+        );
+
+        ActiveGame = Games.MainMenu;
         GlobalPauseState = PauseState.Unpaused;
-        GameDropdown.enabled = dropdownIsDisplayed;
+        GamesDropdownGO.SetActive(dropdownIsDisplayed);
         Init();
     }
     /// <summary>
@@ -120,6 +139,12 @@ public class MenuSystem : MonoBehaviour
         }
         MakeActiveCanvas(Canvases.MainMenu);
     }
+
+    private void DropdownValueChangedListener(Dropdown target)
+    {
+        Debug.Log("Selected: " + target.value);
+        GameManagerRef.MakeActiveGame((Games)target.value);
+    }
     /// <summary>
     /// Makes the passed in canvas active and setts all others to inactive
     /// </summary>
@@ -137,7 +162,13 @@ public class MenuSystem : MonoBehaviour
                 canvas.enabled = false;
             }
         }
+
+        if(Canvases.MainMenu == canvasToDisplay)
+        {
+            Cursor.lockState = CursorLockMode.None;
+        }
     }
+
     /// <summary>
     /// Makes the passed in canvases active and setts all others to inactive
     /// </summary>
@@ -151,7 +182,7 @@ public class MenuSystem : MonoBehaviour
     /// Call to display win or loss text
     /// </summary>
     /// <param name="activeGame">The arcade game currently being played</param>
-    /// <param name="winLose">Weather the game was won or lost. True = won, false = lost</param>
+    /// <param name="winLose">Wether the game was won or lost. True = won, false = lost</param>
     public void OnWinLose(Games activeGame, bool winLose)
     {
         if(true == winLose)
@@ -179,13 +210,12 @@ public class MenuSystem : MonoBehaviour
     /// </summary>
     public void UnPause()
     {
-        if(Games.BlockBreak == activeGame)
+        if(Games.BlockBreak == ActiveGame)
         {
             MakeActiveCanvas(Canvases.BreakoutGame);
         }
         Time.timeScale = 1.0f;
         GlobalPauseState = PauseState.Unpaused;
-        MakeActiveCanvas(Canvases.BreakoutGame);
         CursorManager.ChangeCursorState(CursorLockMode.Locked);
     }
     /// <summary>
@@ -195,7 +225,6 @@ public class MenuSystem : MonoBehaviour
     {
         Time.timeScale = 0.0f;
         GlobalPauseState = PauseState.Paused;
-        //CursorManager.ChangeCursorState(CursorLockMode.Confined);
     }
     /// <summary>
     /// Pauses the game, while switiching the displayed canvas
@@ -214,21 +243,24 @@ public class MenuSystem : MonoBehaviour
     /// </summary>
     private void Update()
     {
-        if(true == Input.GetKeyDown(KeyCode.Escape) && GlobalPauseState == PauseState.Unpaused)
+        if(true == Input.GetKeyDown(KeyCode.Escape) && GlobalPauseState == PauseState.Unpaused && Games.MainMenu != ActiveGame)
         {
             Pause(Canvases.EscMenu);
         }
-        else if(true == Input.GetKeyDown(KeyCode.Escape) && GlobalPauseState == PauseState.Paused)
+        else if(true == Input.GetKeyDown(KeyCode.Escape) && GlobalPauseState == PauseState.Paused && Games.MainMenu != ActiveGame)
         {
             UnPause();
         }
     }
 
+    /// <summary>
+    /// Switches the dropdown menu to be displayed or not
+    /// </summary>
     public void SwitchDropdownState()
     {
         dropdownIsDisplayed = !dropdownIsDisplayed;
 
-        GameDropdown.enabled = dropdownIsDisplayed;
+        GamesDropdownGO.SetActive(dropdownIsDisplayed);
     }
 
     /// <summary>

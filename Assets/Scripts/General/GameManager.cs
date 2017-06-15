@@ -33,6 +33,10 @@ public class GameManager : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Unity Method. 
+    /// This is used as an init so that all setup is done before disabilng game objects
+    /// </summary>
     private void LateUpdate()
     {
         if(true == runSetup)
@@ -52,14 +56,19 @@ public class GameManager : MonoBehaviour
         switch (gameToMakeActive)
         {
             case MenuSystem.Games.NoGame:
+                MenuSystem.ActiveGame = MenuSystem.Games.NoGame;
                 break;
             case MenuSystem.Games.BlockBreak:
+                MenuSystem.ActiveGame = MenuSystem.Games.BlockBreak;
                 PreformSort(MenuSystem.Games.BlockBreak);
                 break;
             case MenuSystem.Games.Snek:
+                MenuSystem.ActiveGame = MenuSystem.Games.Snek;
                 PreformSort(MenuSystem.Games.Snek);
                 break;
             case MenuSystem.Games.MainMenu:
+                MenuSystem.ActiveGame = MenuSystem.Games.MainMenu;
+                PreformSort(MenuSystem.Games.MainMenu);
                 break;
             default:
                 break;
