@@ -40,7 +40,9 @@ public class CanvasAttachment : MonoBehaviour
     /// The name inside the unity inspecter of the main menu canvas
     /// </summary>
     private const string MAIN_MENU = "MainMenu";
-
+    /// <summary>
+    /// he name inside the unity inspector of the canvas for the game Snek
+    /// </summary>
     private const string SNEK_CANVAS = "SnekCanvas";
 
     #endregion
@@ -48,7 +50,7 @@ public class CanvasAttachment : MonoBehaviour
     private void Awake()
     {
         string goName = gameObject.name;
-        switch (name)
+        switch (goName)
         {
             case BLOCKBREAK_CANVAS_MAIN:
                 canvasType = MenuSystem.Canvases.BreakoutGame;
@@ -62,8 +64,11 @@ public class CanvasAttachment : MonoBehaviour
             case MAIN_MENU:
                 canvasType = MenuSystem.Canvases.MainMenu;
                 break;
+            case SNEK_CANVAS:
+                canvasType = MenuSystem.Canvases.SnekGame;
+                break;
             default:
-                Debug.LogError("Something has gone wrong here");
+                Debug.LogError("Something has gone wrong here. Name is: " + goName);
                 break;
         }
     }
