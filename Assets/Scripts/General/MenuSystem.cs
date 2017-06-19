@@ -91,6 +91,16 @@ public class MenuSystem : MonoBehaviour
     /// Reference to the game manager on the _Keeper object
     /// </summary>
     public GameManager gameMan;
+
+    /// <summary>
+    /// Reference to the food manager class on the _Keeper object
+    /// </summary>
+    public FoodManager FoodMan;
+
+    /// <summary>
+    /// Referece to keep moving forward class
+    /// </summary>
+    public KeepMovingForward keepMovingFwd;
     #endregion
 
     #region Private Fields
@@ -162,6 +172,12 @@ public class MenuSystem : MonoBehaviour
     private void DropdownValueChangedListener(Dropdown target)
     {
         GameManagerRef.MakeActiveGame((Games)target.value);
+        if(Games.Snek == (Games)target.value)
+        {
+            ReloadMan.ResetGame(Games.Snek);
+            FoodMan.StartSpawningFood();
+            keepMovingFwd.StartMovement();
+        }
     }
     /// <summary>
     /// Makes the passed in canvas active and sets all others to inactive
