@@ -62,7 +62,7 @@ public class ReloadingManager : MonoBehaviour
         Ball.transform.position = new Vector2(0, 1.75f);
 
         MenuSystem menSys = GameObject.Find("_Keepers").GetComponent<MenuSystem>();
-        menSys.MakeActiveCanvas(MenuSystem.Canvases.BreakoutGame);
+        menSys.MakeActiveCanvas(MenuSystem.Canvases.BlockBreak);
         menSys.UnPause();
     }
 

@@ -88,7 +88,7 @@ public class GameManager : MonoBehaviour
                 switch (wantedGame)
                 {
                     case MenuSystem.Games.BlockBreak:
-                        MenSys.MakeActiveCanvas(MenuSystem.Canvases.BreakoutGame);
+                        MenSys.MakeActiveCanvas(MenuSystem.Canvases.BlockBreak);
                         break;
                     case MenuSystem.Games.Snek:
                         MenSys.MakeActiveCanvas(MenuSystem.Canvases.SnekGame);

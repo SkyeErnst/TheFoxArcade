@@ -20,7 +20,7 @@ public class MenuSystem : MonoBehaviour
         /// The main canvas for the Blockbreak game.
         /// Contains information such as score and score multiplier
         /// </summary>
-        BreakoutGame = 0,
+        BlockBreak = 0,
         /// <summary>
         /// This canvas displays the win/loss text and offers to let the
         /// player try again or exit the cabinet
@@ -201,6 +201,10 @@ public class MenuSystem : MonoBehaviour
         {
             Cursor.lockState = CursorLockMode.None;
         }
+        else
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+        }
     }
 
     /// <summary>
@@ -244,9 +248,21 @@ public class MenuSystem : MonoBehaviour
     /// </summary>
     public void UnPause()
     {
-        if(Games.BlockBreak == ActiveGame)
+        switch (ActiveGame)
         {
-            MakeActiveCanvas(Canvases.BreakoutGame);
+            case Games.BlockBreak:
+                MakeActiveCanvas(Canvases.BlockBreak);
+                break;
+            case Games.Snek:
+                MakeActiveCanvas(Canvases.SnekGame);
+                break;
+            case Games.MainMenu:
+                break;
+            case Games.NoGame:
+                break;
+            default:
+                Debug.Log("Somethng has gone wrong here");
+                break;
         }
         Time.timeScale = 1.0f;
         GlobalPauseState = PauseState.Unpaused;

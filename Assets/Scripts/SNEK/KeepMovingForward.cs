@@ -85,7 +85,6 @@ public class KeepMovingForward : MonoBehaviour
     /// </summary>
     private void MoveSnekStack(Vector2 movementVector)
     {
-        Debug.Log("Moving Snake");
         List<Segment> segLis = new List<Segment>(SnekSegmentController.GetSegmentList());
         Vector2 originalHeadPos;
 

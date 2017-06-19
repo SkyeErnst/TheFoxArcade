@@ -53,7 +53,7 @@ public class CanvasAttachment : MonoBehaviour
         switch (goName)
         {
             case BLOCKBREAK_CANVAS_MAIN:
-                canvasType = MenuSystem.Canvases.BreakoutGame;
+                canvasType = MenuSystem.Canvases.BlockBreak;
                 break;
             case BREAKOUT_CANVAS_WINLOSE:
                 canvasType = MenuSystem.Canvases.BreakoutWinLose;
