@@ -104,6 +104,10 @@ public class ReloadingManager : MonoBehaviour
         snekSegCtrl.ClearSegmentList();
     }
 
+    /// <summary>
+    /// Resets the given game. Reseting NoGame will do nothing.
+    /// </summary>
+    /// <param name="gameToReset"></param>
     public void ResetGame(MenuSystem.Games gameToReset)
     {
         switch (gameToReset)

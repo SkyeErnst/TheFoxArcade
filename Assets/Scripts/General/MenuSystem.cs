@@ -81,6 +81,16 @@ public class MenuSystem : MonoBehaviour
     /// load new games.
     /// </summary>
     public GameManager GameManagerRef;
+
+    /// <summary>
+    /// Reference to reloading manager on the _Keeper object.
+    /// </summary>
+    public ReloadingManager ReloadMan;
+
+    /// <summary>
+    /// Reference to the game manager on the _Keeper object
+    /// </summary>
+    public GameManager gameMan;
     #endregion
 
     #region Private Fields
@@ -269,6 +279,17 @@ public class MenuSystem : MonoBehaviour
         dropdownIsDisplayed = !dropdownIsDisplayed;
 
         GamesDropdownGO.SetActive(dropdownIsDisplayed);
+    }
+
+    /// <summary>
+    /// Sets active game to main menu and makes the main menu canvas active while disabiling all others
+    /// </summary>
+    public void QuitToMainMenu()
+    {
+        ActiveGame = Games.MainMenu;
+        MakeActiveCanvas(Canvases.MainMenu);
+        ReloadMan.ResetGame(ActiveGame);
+        gameMan.MakeActiveGame(Games.MainMenu);
     }
 
     /// <summary>
