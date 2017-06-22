@@ -252,13 +252,18 @@ public class MenuSystem : MonoBehaviour
         {
             case Games.BlockBreak:
                 MakeActiveCanvas(Canvases.BlockBreak);
+                CursorManager.ChangeCursorState(CursorLockMode.Locked);
                 break;
             case Games.Snek:
                 MakeActiveCanvas(Canvases.SnekGame);
+                CursorManager.ChangeCursorState(CursorLockMode.Locked);
                 break;
             case Games.MainMenu:
+                MakeActiveCanvas(Canvases.MainMenu);
+                CursorManager.ChangeCursorState(CursorLockMode.None);
                 break;
             case Games.NoGame:
+                CursorManager.ChangeCursorState(CursorLockMode.Locked);
                 break;
             default:
                 Debug.Log("Somethng has gone wrong here");
@@ -266,7 +271,7 @@ public class MenuSystem : MonoBehaviour
         }
         Time.timeScale = 1.0f;
         GlobalPauseState = PauseState.Unpaused;
-        CursorManager.ChangeCursorState(CursorLockMode.Locked);
+        
     }
     /// <summary>
     /// Pauses the game

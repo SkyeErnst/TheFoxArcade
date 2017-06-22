@@ -55,7 +55,6 @@ public class GameManager : MonoBehaviour
     /// <param name="gameToMakeActive">Game to be made active</param>
     public void MakeActiveGame(MenuSystem.Games gameToMakeActive)
     {
-        // Add all parent objects to list. Nested foreach loop to loop over parents and their children to activate / deactiveate as needed
         switch (gameToMakeActive)
         {
             case MenuSystem.Games.NoGame:
@@ -72,10 +71,12 @@ public class GameManager : MonoBehaviour
             case MenuSystem.Games.MainMenu:
                 MenuSystem.ActiveGame = MenuSystem.Games.MainMenu;
                 PreformSort(MenuSystem.Games.MainMenu);
+                MenSys.UnPause();
                 break;
             default:
                 break;
         }
+        MenSys.UnPause();
     }
 
     private void PreformSort(MenuSystem.Games wantedGame)
